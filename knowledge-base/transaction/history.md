@@ -1,12 +1,12 @@
 ---
 module: transaction
 feature: history
-version: "3.1"
+version: "3.2"
 status: active
 doc_type: ai-readable-prd-translation
-source_doc: archive/legacy-prd/app/transaction-history/README.md；archive/legacy-prd/card/transaction/README.md；archive/legacy-prd/wallet/deposit-send-swap/README.md
-source_section: Transaction & History / 7.1 全量交易；7.2 Card History；Wallet Deposit/Send/Swap 交易来源
-last_updated: 2026-05-09
+source_doc: archive/legacy-prd/app/transaction-history/README.md；archive/legacy-prd/card/transaction/README.md；archive/legacy-prd/wallet/deposit-send-swap/README.md；AIX 代码 src/data/transaction/TransactionHistoryData.ts
+source_section: Transaction & History / 7.1 全量交易；7.2 Card History；Wallet Deposit/Send/Swap 交易来源；前端 TransactionType / SourceType / transactionDescription 映射
+last_updated: 2026-05-29
 owner: 吴忆锋
 readers: [product, ui, dev, qa, business, ai]
 depends_on:
@@ -27,6 +27,39 @@ depends_on:
 > 本文件是对 Card History、Wallet Transaction History、Deposit History 相关历史 PRD / DTC 文档内容的 AI-readable 结构化转译稿。  
 > 本文件定位为交易历史事实载体，不是新的全局交易流水设计，不合并 Card / Wallet 字段来源，不补写未确认状态机。  
 > 原 Wallet 交易历史分散内容已合并至本文件；Wallet 交易历史主事实源以本文为准。
+
+> Code alignment note: 2026-05-29 按 AIX 前端代码 `src/data/transaction/TransactionHistoryData.ts` 补充交易历史的运行时可确认枚举与列表展示（对应 ALL-GAP-037 的前端类型层）。本次只列代码可直接证明的枚举值、展示文案映射与列表分组行为，**不补**后端 ActivityType → 前端类型的映射、筛选 / 搜索 / 分页规则——这些仍以 converted-prd 与 ALL-GAP 为准。
+
+## 0.1 代码可确认的运行时事实补充（2026-05-29）
+
+以下内容来自 AIX 当前前端代码实现，仅作为前端类型 / 展示层的运行时事实补充。
+
+### 0.1.1 前端交易聚合维度枚举
+
+- `TransactionDataType`：`Card='CARD'`、`Crypto='CRYPTO'`、`Default='DEFAULT'`。
+- `SourceType`：`Card='CARD'`、`Crypto='CRYPTO'`、`Swap='OTC'`（注意 Swap 的来源值字符串是 `'OTC'`）。
+
+### 0.1.2 前端交易类型枚举（TransactionType）
+
+代码可确认九值：`Payment='PAYMENT'`、`CashWithdrawal='CASH_WITHDRAWAL'`、`CryptoDeposit='CRYPTO_DEPOSIT'`、`Receive='RECEIVE'`、`Send='SEND'`、`Swap='SWAP'`、`Refund='REFUND'`、`CardApplication='CARD_APPLICATION'`、`CardCancel='CARD_CANCEL'`。
+
+> 注：`Receive='RECEIVE'` 仅作为交易历史中的一种交易类型存在；当前代码中**没有**独立的 Receive 收款页面 / 入口路由（见 account / wallet 路由核查与 ALL-GAP-052 / ALL-GAP-059）。交易类型存在 ≠ 存在可发起入口。
+
+### 0.1.3 前端交易类型展示文案（transactionDescription）
+
+`TransactionHistoryItem` 代码可确认的 label 映射：`CryptoDeposit → "Crypto Deposit"`、`Receive → "Receive"`、`Send → "Send"`、`CardApplication → "Card Application"`、`CardCancel → "Card Cancel"`、`Swap → "Swap"`。其余类型的展示文案以代码 / 后端为准，此处只列代码可确认的映射。
+
+### 0.1.4 列表分组（convertToListItems）
+
+`convertToListItems()` 按 `sectionTitle` 对交易做时间分组，并在列表中插入 `SectionHeader` 行。`stateColor` 着色规则同 `transaction/status-model.md` 0.1.2（`REFUNDED` 橙、`DECLINED` 红、其余灰）。
+
+### 0.1.5 不从代码推导的内容
+
+以下本次不从代码补充（仍以 converted-prd / ALL-GAP 为准）：
+
+- 后端 ActivityType（如 `FIAT_DEPOSIT=6`、`CRYPTO_DEPOSIT=10` 等）→ 前端 `TransactionType` 的映射（仍 ALL-GAP-037）。
+- 交易筛选范围、是否有搜索、分页 / 加载更多规则。
+- `sectionTitle` 的具体分组算法（按日期 / 相对时间）与文案细节。
 
 ---
 
