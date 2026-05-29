@@ -1,11 +1,11 @@
 ---
 module: security
 feature: global-rules
-version: "1.1"
+version: "1.2"
 status: active
 source_doc: archive/legacy-prd/security/identity-verification/README.md；archive/legacy-prd/app/registration-login/README.md；archive/legacy-prd/card/manage/README.md；archive/legacy-prd/wallet/deposit-send-swap/README.md
 source_section: Security / 7 全局规则、8 需求描述、9 外部接口、10 错误码；Registration BIO / Password；Card Manage PIN / Sensitive operations；Wallet Send/Swap auth
-last_updated: 2026-05-09
+last_updated: 2026-05-28
 owner: 吴忆锋
 depends_on:
   - security/_index
@@ -17,6 +17,75 @@ depends_on:
 ---
 
 # Security Global Rules 全局认证规则
+
+> Code alignment note: 2026-05-28 按 AIX 前端代码 `src/services/ivs/IvsFlowStarter.ts`、`src/services/ivs/IvsFlowHub.ts`、`src/data/ivs/IvsData.ts`、`src/data/ivs/IvsRepo.ts`、`src/data/ivs/IvsFlowFeedbackData.ts`、`src/aix/ivs/IvsService.ts`、`src/constants/RouterNames.ts` 补充 IVS session 化机制与 challenge 路由的运行时可确认事实。本次只写入代码可直接证明的内容；认证优先级策略、认证有效期、锁定时长、场景矩阵、国家线等保持原文并在 0.1.6 标注为不可由代码推导。
+
+## 0.1 代码可确认的运行时事实补充（2026-05-28）
+
+以下内容来自 AIX 当前代码实现，仅作为运行时事实补充；若与下文历史 PRD 描述存在差异，以当前代码和后端业务事实复核为准。
+
+### 0.1.1 IVS 触发与解析
+
+代码可确认：
+
+- IVS 流程由错误码 `NEED_SECURITY_VERIFICATION` 触发。
+- 触发后从错误 extra 中读取 `ivsSession`（`IvsAuthSession`）；缺失时标记 `IVS_VALID_FAILED`，存在时标记 `IVS_CODE_RESP_HANDLED`。
+
+### 0.1.2 IVS session 结构
+
+代码可确认 `IvsAuthSession` 包含：
+
+- `sessionId`
+- `scenario`，可选。
+- `allStagesCompleted`，可选。
+- `nextStage`，可选，包含 `stageId` 与 `options`。
+- `notAvailableInfo`，可选，包含 `cta`。
+
+每个 `IvsChallengeOption` 包含 `challengeId`、`challengeType`、可选 `priority`、可选 `extra`（`extra.deliveryTarget` 注释标识可能为 email / sms / phone）。
+
+### 0.1.3 嵌套 session 与流程事件
+
+代码可确认：
+
+- IVS 支持嵌套：`ivsFlowManager` 以 `sessionId` 为键管理上下文，`clear(sessionId)` 只重置该 session。
+- 流程事件包含 `started` / `progress` / `failed` / `cancelled` / `success` / `completed`；`failed` / `cancelled` / `success` 之后都会再 emit `completed` 并清理上下文。
+
+### 0.1.4 challenge 路由分发
+
+代码可确认 `gotoIvsNextStep(session)` 遍历 `session.nextStage.options`，按大写 challenge type 路由：
+
+| challengeType | 跳转页面 |
+|---|---|
+| `EMAIL_OTP` | `IvsEmailOtpPage` |
+| `MOBILE_OTP` | `IvsPhoneOtpPage` |
+| `CURRENT_LOGIN_PASSWORD` | `IvsPwdPage` |
+| `DTC_FACE` | `IvsLivenessPage` |
+| `BIOMETRIC` | `IvsBiometricPage`，modal 打开，且需 `checkAvailability()` 通过 |
+
+补充规则：
+
+- 启动流程时若 biometric 不可用，会过滤掉 `BIOMETRIC` 选项。
+- 若无可路由 option 且存在 `notAvailableInfo.cta`，前端展示该 CTA 并以 `Locked` 标记失败。
+- 若 `nextStage.options` 不存在，前端清理当前 session 并返回未处理。
+
+### 0.1.5 session 化 invoke / verify 与流程完成判定
+
+代码可确认：
+
+- `invoke(sessionId, stageId, challengeId, extra)` → `Urls.ivsInvoke`。
+- `verify(session)` → `Urls.ivsVerify`，入参为 `IvsVerifyParams`。
+- 验证完成后：`allStagesCompleted` 为真 → 完成；否则 `nextStage` 不为空 → 进入下一 stage；都不满足 → 失败。
+- 流程反馈状态 `IvsFlowFeedbackStatusType` 包含 `Completed` / `Failed` / `Canceled` / `Success`，并兼容把 legacy `Cancel` 归一化为 `Canceled`。
+
+### 0.1.6 不从代码推导的内容
+
+以下内容本次不从代码补充：
+
+- 认证方式优先级的最终策略（`priority` 字段存在，但完整排序规则未在前端确认）。
+- 认证有效期、免验证时间窗。
+- 各认证方式失败锁定次数与时长。
+- 业务场景认证矩阵与国家线（VN / PH / AU）的强制映射。
+- `scenario` 取值集合与业务含义。
 
 ## 1. 功能定位
 
