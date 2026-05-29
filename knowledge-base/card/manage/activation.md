@@ -1,11 +1,11 @@
 ---
 module: card
 feature: card-activation
-version: "1.1"
+version: "1.2"
 status: active
-source_doc: archive/legacy-prd/card/manage/README.md；archive/legacy-prd/security/identity-verification/README.md；archive/legacy-prd/card/application/README.md
-source_section: Card Manage / 7.2 卡激活；8 外部接口；Security / Face Authentication
-last_updated: 2026-05-09
+source_doc: archive/legacy-prd/card/manage/README.md；archive/legacy-prd/security/identity-verification/README.md；archive/legacy-prd/card/application/README.md；AIX 代码 src/data/card/manage/CardActivateData.ts、CardActivateRepo.ts
+source_section: Card Manage / 7.2 卡激活；8 外部接口；Security / Face Authentication；前端 verifyLastFour / activeCard 接口
+last_updated: 2026-05-29
 owner: 吴忆锋
 readers: [product, ui, dev, qa, business, ai]
 ---
@@ -14,6 +14,23 @@ readers: [product, ui, dev, qa, business, ai]
 
 > Source alignment note: 本文件已按 converted-prd 做双向覆盖校验，补齐 Card Manage 证据缺口。
 
+> Code alignment note: 2026-05-29 按 AIX 前端代码 `src/data/card/manage/CardActivateData.ts`、`CardActivateRepo.ts` 补充实体卡激活的运行时可确认事实。只写代码可直接证明的请求参数与接口；后四位校验的具体错误文案、激活前置条件仍以 converted-prd / 后端为准。
+
+## 0.1 代码可确认的运行时事实补充（2026-05-29）
+
+### 0.1.1 激活两步接口
+
+代码可确认（`CardActivateRepo.ts`）激活分两步：
+
+- 校验后四位：`verifyLastFour({ cardId, lastFourDigitCardNo })` → POST `Urls.cardActiveVerifyLastFour`。
+- 激活：`activeCard({ cardId, lastFourDigitCardNo })` → POST `Urls.cardActive`。
+
+两个请求体均为 `{ cardId, lastFourDigitCardNo }`（`VerifyLastFourParams` / `ActiveCardParams`）。
+
+### 0.1.2 不从代码推导的内容
+
+- 后四位错误 / 激活失败的具体文案（后端透传）。
+- 激活成功后是否强制 Set PIN（见 `pin.md` 0.1，PIN 入口类型含 `ACTIVATE`）。
 
 ## 1. 文档信息
 
