@@ -1,11 +1,11 @@
 ---
 module: common
 feature: faq
-version: "2.0"
+version: "2.1"
 status: active
-source_doc: archive/legacy-prd/app/faq/README.md；archive/legacy-prd/app/home/README.md
-source_section: FAQ / 3 功能需求；Home / FAQ 展示
-last_updated: 2026-05-09
+source_doc: archive/legacy-prd/app/faq/README.md；archive/legacy-prd/app/home/README.md；AIX 代码 src/data/global-config/FaqLocation.ts、src/data/card/CardFaqData.ts
+source_section: FAQ / 3 功能需求；Home / FAQ 展示；前端 FaqLocation 枚举、FAQ VO、cardFaqQuery 接口
+last_updated: 2026-05-29
 owner: 吴忆锋
 readers: [product, ui, dev, qa, business, ai]
 depends_on:
@@ -18,6 +18,34 @@ depends_on:
 ---
 
 # FAQ 公共问答
+
+> Code alignment note: 2026-05-29 按 AIX 前端代码 `src/data/global-config/FaqLocation.ts`、`src/data/card/CardFaqData.ts`、`packages/common/src/network/Urls.ts` 补充 FAQ 展示位置与数据结构的运行时可确认事实。本次只写代码可直接证明的枚举、VO 字段与查询接口；**不补**具体问答正文、Zendesk / `more` 链接配置、各位置是否启用——这些由服务端配置控制，仍以 converted-prd 为准。
+
+## 0.1 代码可确认的运行时事实补充（2026-05-29）
+
+以下内容来自 AIX 当前前端代码实现，仅作为 FAQ 展示位置与数据结构的运行时事实补充。
+
+### 0.1.1 FAQ 展示位置枚举（FaqLocation）
+
+代码可确认 `FaqLocation` 14 值（`FaqLocation.ts`）：`ApplyCardVirtual="APPLY_CARD_VIRTUAL"`、`ApplyCardPhysical="APPLY_CARD_PHYSICAL"`、`ApplyCardChooseCurrency="APPLY_CARD_CHOOSE_CURRENCY"`、`CardManageHome="CARD_MANAGE_HOME"`、`CardManageBindGoogle="CARD_MANAGE_BIND_GOOGLE"`、`BindPhone="BIND_PHONE"`、`TransactionAllList="TRANSACTION_ALL_LIST"`、`TransactionDetail="TRANSACTION_DETAIL"`、`TransactionTransfer="TRANSACTION_TRANSFER"`、`TransactionSwap="TRANSACTION_SWAP"`、`TransactionDeposit="TRANSACTION_DEPOSIT"`、`DepositGtr="DEPOSIT_GTR"`、`DepositWc="DEPOSIT_WC"`、`ContactUs="CONTACT_US"`。这是前端标识「在哪个场景展示 FAQ」的位置码，与第 5 节场景矩阵对应。
+
+### 0.1.2 FAQ 数据结构（FAQ VO）
+
+代码可确认 `FAQ` VO（`CardFaqData.ts`）字段：`questionId?`、`title?`、`description?`（答案）、`scenario?`（关联场景，如 "Apply Card"）、`type?`（如 "Virtual Card" / "Physical Card"）、`createTime?`、`extra?`。
+
+> 说明：第 3 节规则提到这些字段在历史 PRD 表头中带删除线、不沉淀为字段模型；但当前前端代码 VO 确实承载上述字段。此处仅登记**代码运行时事实**，不改变历史 PRD 的产品口径——具体哪些字段对外展示仍以模块产品确认为准。
+
+### 0.1.3 Card FAQ 查询接口
+
+代码可确认申卡 FAQ 查询：`Urls.cardFaqQuery`（`/api/card/faq/query`）。结果按类型聚合为 `CardFaqByTypeData { virtual?, physical? }`，分别对应 `type=VIRTUAL` / `type=PHYSICAL` 的响应（`CardFaqData.ts`）。
+
+### 0.1.4 不从代码推导的内容
+
+以下本次不从代码补充（仍以 converted-prd / 服务端配置为准）：
+
+- FAQ 具体问答正文（由服务端配置 / 接口返回，前端不硬编码）。
+- `more` 入口、Zendesk Section 链接的具体配置。
+- 各 `FaqLocation` 是否当前都已启用、排序规则、删除线场景的最终处置。
 
 ## 1. 文档定位
 
