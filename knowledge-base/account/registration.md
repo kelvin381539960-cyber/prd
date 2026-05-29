@@ -1,11 +1,11 @@
 ---
 module: account
 feature: registration
-version: "1.1"
+version: "1.2"
 status: active
 source_doc: archive/legacy-prd/app/registration-login/README.md；archive/legacy-prd/security/identity-verification/README.md
-source_section: registration-login / 5.2 账户说明；7.1 注册功能；security / Email OTP 认证
-last_updated: 2026-05-09
+source_section: registration-login / 5.2 账户说明；7.1 注册功能；security / Email OTP 认证；AIX 代码 src/aix/register/*、src/data/register/*、src/data/set-pwd/*
+last_updated: 2026-05-29
 owner: 吴忆锋
 depends_on:
   - account/_index
@@ -25,6 +25,46 @@ Registration 用于新用户通过邮箱创建 AIX 账户，并完成邮箱 OTP 
 注册成功后，服务端生成 UID，账户状态为 Active。用户成功注册 / 登录后，系统自动将当前 Device ID 与账户绑定。
 
 > Source alignment note: 本文件按 `archive/legacy-prd/app/registration-login/README.md` 校准；邮箱 OTP 等认证细节以 `archive/legacy-prd/security/identity-verification/README.md` 为支撑证据。
+
+> Code alignment note: 2026-05-29 按 AIX 前端代码 `src/aix/register/useRegisterStore.ts`、`src/aix/register/RegisterService.ts`、`src/data/register/RegiseterRepo.ts`、`src/data/set-pwd/SetPwdData.ts`、`src/data/set-pwd/SetPwdRepo.ts` 补充注册运行时可确认事实。本次只写代码可直接证明的内容；邮箱唯一性、设备绑定上限、账户状态、协议来源、国家线等仍以历史 PRD 为准。
+
+## 0.1 代码可确认的运行时事实补充（2026-05-29）
+
+以下内容来自 AIX 当前代码实现，仅作为运行时事实补充；若与下文历史 PRD 描述存在差异，以当前代码和后端业务事实复核为准。
+
+### 0.1.1 注册两步接口
+
+- Step1：`register(email, recommendTag?)` → POST `Urls.registerStep1`，提交 `{ email, recommendTag }`（`RegiseterRepo.ts`）。
+- Step2（设置密码完成注册）：`registerStep2(payload)` → POST `Urls.registerStep2`（`SetPwdRepo.ts`）。
+
+> 注：`RegisterRepo` 在代码中带注释 “Default mock implementation. Replace with real API when ready.”，请求结构可确认，是否为最终生产实现以后端联调为准。
+
+### 0.1.2 Step1 入参与可提交条件（useRegisterStore）
+
+Store 字段：`email`、`aixCode?`（推荐码 / referral）、`agreeIds[]`、`contractItems[]` 及各校验位。
+
+代码可确认 `checkEnable()`：邮箱有效 **且**（未填 aixCode **或** aixCode 有效）**且** 已同意协议（`isAgree`）时方可提交。
+
+`registe()` 提交时代码可确认：`aixCode` 去掉前导 `@`；`dataConsent = (agreeIds.length === contractItems.length)`（是否勾选全部协议项）。成功后 `router.replace(EmailOtpPage, { email, recommendTag, dataConsent })`。
+
+### 0.1.3 Step2 入参（RegisterStep2Request）
+
+代码可确认：`{ recommendTag?, password, otpSessionId, dataConsent? }`（`SetPwdData.ts`）。`otpSessionId` 来自邮箱 OTP 验证阶段（见 `security/email-otp-verification`）。`registerStep2` 成功响应类型 `RegisterStep2Data extends UserInfo`（代码注释：成功返回空 data 对象 / 用户信息）。
+
+### 0.1.4 代码可确认的注册主链路
+
+`Registration Page →（registerStep1）→ Email OTP Page →（OTP 通过得 otpSessionId）→ Set Password Page（registerStep2）→ 返回用户档案`。Set Tag / 跳过设置等后续页面本次未从代码取证，保持原文。
+
+### 0.1.5 不从代码推导的内容
+
+以下本次不从代码补充（仍以历史 PRD 为准）：
+
+- 邮箱全局唯一性、重复注册拦截（后端规则）。
+- 设备绑定上限（单账户 1 device / 1 设备在线）。
+- 注册成功后账户状态 = Active 的服务端结论。
+- 国家线（VN / PH / AU）支持范围。
+- 协议项来自中台管理系统的来源与具体内容。
+- Set Tag 页规则；密码长度 / 复杂度（见 `security/password-policy`）。
 
 ## 2. 适用范围
 
