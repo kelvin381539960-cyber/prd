@@ -1,11 +1,11 @@
 ---
 module: security
 feature: email-otp-verification
-version: "1.1"
+version: "1.2"
 status: active
 source_doc: archive/legacy-prd/security/identity-verification/README.md；archive/legacy-prd/app/registration-login/README.md；archive/legacy-prd/card/manage/README.md；archive/legacy-prd/wallet/deposit-send-swap/README.md
 source_section: Security / 7 全局规则、8 需求描述、9 外部接口、10 错误码；Registration BIO / Password；Card Manage PIN / Sensitive operations；Wallet Send/Swap auth
-last_updated: 2026-05-09
+last_updated: 2026-05-28
 owner: 吴忆锋
 depends_on:
   - security/_index
@@ -16,6 +16,61 @@ depends_on:
 ---
 
 # Email OTP Verification 邮箱验证码认证
+
+> Code alignment note: 2026-05-28 按 AIX 前端代码 `src/data/ivs/IvsRepo.ts`、`src/data/ivs/OtpData.ts`、`src/data/ivs/IvsData.ts`、`src/services/ivs/IvsFlowStarter.ts`、`src/constants/RouterNames.ts` 补充 Email OTP 运行时可确认的接口、字段与路由。本次只写入代码可直接证明的内容；本文档第 2 节及之后的验证码位数、有效期、失败/重发次数、锁定时长、邮箱掩码、设备绑定等均来自历史 PRD，当前前端代码无法确认，保持原文并在 0.1.5 标注为不可由代码推导。
+
+## 0.1 代码可确认的运行时事实补充（2026-05-28）
+
+以下内容来自 AIX 当前代码实现，仅作为运行时事实补充；若与下文历史 PRD 描述存在差异，以当前代码和后端业务事实复核为准。
+
+### 0.1.1 Email OTP legacy 接口
+
+代码可确认 `IvsRepo` 中 Email OTP legacy 接口：
+
+- `sendEmailOtp(email, sessionId)`
+  - 当 `sessionId` 为空时，请求 `Urls.emailOtpFirst`，参数为 `email`。
+  - 当 `sessionId` 存在时，请求 `Urls.emailOtp`，参数为 `otpSessionId`。
+- `verifyEmailOtp(sessionId, otpCode)`
+  - 请求 `Urls.emialVerify`（代码常量名即为此拼写）。
+  - 参数为 `otpSessionId`、`otpCode`。
+
+### 0.1.2 Email OTP 走 session 化 IVS 的接口
+
+代码可确认 Email OTP 也可走 session 化 IVS 通道：
+
+- `invoke(sessionId, stageId, challengeId, extra)` → `Urls.ivsInvoke`。
+- `verify(session)` → `Urls.ivsVerify`；`session` 为 `IvsVerifyParams`，验证码通过 `credential.otpCode` 提交。
+
+### 0.1.3 OTP 返回结构
+
+代码可确认发送 OTP 返回 `OtpData`：
+
+- `otpSessionId`
+- `remainTimes`，可选。
+- `resendTime`，可选。
+
+当前代码只能确认字段存在，不能确认 `remainTimes` 的业务含义、`resendTime` 的单位或验证码有效期。
+
+### 0.1.4 challenge 类型与页面路由
+
+代码可确认：
+
+- `IvsChallengeType` 类型字面量包含 `otp`（以及 `CURRENT_LOGIN_PASSWORD`、`capturingLiveness`、`biometric`）。
+- IVS 路由分发 `gotoIvsNextStep` 按大写 challenge type 匹配，`EMAIL_OTP` 路由到 `IvsEmailOtpPage`（`RouterNames.IvsEmailOtpPage = "/aix/ivs/ivs-email-otp-page"`）。
+
+注意：类型字面量 `otp` 与路由分发使用的 `EMAIL_OTP` 是否完全等价，不能仅从前端代码推导。
+
+### 0.1.5 不从代码推导的内容
+
+以下内容本次不从代码补充（第 2–9 节相关数字均来自历史 PRD，未经代码确认）：
+
+- 验证码为 4 位数字。
+- 验证码 5 分钟有效期。
+- 失败 5 次锁 20 分钟、10 次锁 24 小时。
+- 24 小时内重发最多 3 次及冷却时长。
+- 邮箱掩码具体规则。
+- 验证码仅限发起请求设备使用（设备绑定）。
+- 场景隔离锁定的完整范围。
 
 ## 1. 功能定位
 
