@@ -1,11 +1,11 @@
 ---
 module: common
 feature: errors
-version: "2.0"
+version: "2.1"
 status: active
-source_doc: archive/legacy-prd/**/README.md；knowledge-base/* 已校准模块
-source_section: converted PRD corpus / error messages, toast, popup, failed pages, API errors
-last_updated: 2026-05-09
+source_doc: archive/legacy-prd/**/README.md；knowledge-base/* 已校准模块；AIX 代码 packages/common/src/network/error/*、src/network/ApiErrorUtils.ts、src/data/biometric/EnableBiometricRepo.ts
+source_section: converted PRD corpus / error messages, toast, popup, failed pages, API errors；前端 AixError / ErrorCodes / ErrorEventType / BiometricError
+last_updated: 2026-05-29
 owner: 吴忆锋
 readers: [product, ui, dev, qa, business, ai]
 depends_on:
@@ -24,6 +24,46 @@ depends_on:
 ---
 
 # Common Errors 错误处理公共能力
+
+> Code alignment note: 2026-05-29 按 AIX 前端代码 `packages/common/src/network/error/{AixError,ErrorCodes,ErrorObserver}.ts`、`src/network/ApiErrorUtils.ts`、`src/data/biometric/EnableBiometricRepo.ts` 补充错误处理框架层的运行时可确认事实。本次只写代码可直接证明的错误对象结构、框架级错误码常量与枚举；**不补**业务错误码到展示文案的对应关系（后端透传，前端无固定 copy），下文第 4–11 节的具体英文文案仍以各模块 converted-prd 为准。
+
+## 0.1 代码可确认的运行时事实补充（2026-05-29）
+
+以下内容来自 AIX 当前前端代码实现，仅作为错误处理框架层的运行时事实补充。
+
+### 0.1.1 前端统一错误对象（AixError）
+
+代码可确认 `AixError extends Error { code, rawCode(私有), data, extra, message, pending? }`（`AixError.ts`）。前端通过 `getErrorCode(error)` / `getErrorMessage(error)` 读取 `code` / `message`（`ApiErrorUtils.ts`）。
+
+### 0.1.2 框架级错误码常量（ErrorCodes）
+
+`ErrorCodes`（`@aix/common`）代码可确认 8 个：`UNAUTHORIZED`、`NETWORKERROR`、`SUCCESS`、`FAILED`、`NEED_SECURITY_VERIFICATION`、`IVS_CODE_RESP_HANDLED`、`IVS_VALID_FAILED`、`ACCOUNT_STATUS_ABNORMAL`。
+
+> 关键边界：这是**前端框架层**的错误码常量集合。业务错误码（如 `USER_NOT_FOUND`、`DEVICE_BIOMETRIC_STATUS_NOT_MATCH`、`BIO_INCORRECT`）**不在**这个常量里——它们是后端透传的 `aixError.code` 字符串，前端按字符串值分支处理（见 `account/login.md` 0.1.6）。因此「错误码全集」必须以后端为准，本文不写成事实。
+
+### 0.1.3 网络错误判定（isNetworkError）
+
+代码可确认网络错误判定（`ApiErrorUtils.ts`）：`AixError.code === 'NETWORKERROR'`，或 axios 无 `response`，或 axios `code` 为 `ECONNABORTED` / `ERR_NETWORK`。网络错误兜底文案取 i18n key `network_error_page_check_your`。
+
+### 0.1.4 安全验证错误（needSecurityVerification）
+
+`needSecurityVerification(error)` 在 `error.code === IVS_CODE_RESP_HANDLED` 时为真（`ApiErrorUtils.ts`），用于衔接 IVS 二次验证流程（见 security 模块）。
+
+### 0.1.5 IVS / 二次验证事件流（ErrorEventType）
+
+二次验证采用观察者事件流，`ErrorEventType` 代码可确认六值：`started`、`progress`、`success`、`failed`、`cancelled`、`completed`（`ErrorObserver.ts`）。`AixError.subscribe()` 订阅这些事件，登录等场景据 `success` / `failed` 决定重试或报错。
+
+### 0.1.6 生物识别错误（BiometricError）
+
+`BiometricError` 枚举代码可确认四值：`USER_CANCEL`、`SYSTEM_ERROR`、`AUTH_DENIED`、`USER_ATTEMPTS_EXCEEDED`（`EnableBiometricRepo.ts`）。Android 原生码映射：`7 / 9 → USER_ATTEMPTS_EXCEEDED`、`10 / 5 / 13 → USER_CANCEL`、其余 → `SYSTEM_ERROR`。（详见 `security/biometric-verification.md`。）
+
+### 0.1.7 不从代码推导的内容
+
+以下本次不从代码补充（仍以各模块 converted-prd / 后端为准）：
+
+- 业务错误码（`USER_NOT_FOUND` 等）的完整清单及对应展示文案——后端透传，前端无固定 copy。
+- 下文第 4–11 节具体英文文案与各错误码的对应关系。
+- DTC 未知错误码的归类（仍按模块要求 Lark 报警）。
 
 ## 1. 文档定位
 
