@@ -1,12 +1,12 @@
 ---
 module: transaction
 feature: detail
-version: "3.1"
+version: "3.2"
 status: active
 doc_type: ai-readable-prd-translation
-source_doc: archive/legacy-prd/app/transaction-history/README.md；archive/legacy-prd/card/transaction/README.md；archive/legacy-prd/wallet/deposit-send-swap/README.md
-source_section: Transaction & History / Card Transaction Details、Crypto Transaction Details、Swap Details；Wallet Deposit/Send/Swap
-last_updated: 2026-05-09
+source_doc: archive/legacy-prd/app/transaction-history/README.md；archive/legacy-prd/card/transaction/README.md；archive/legacy-prd/wallet/deposit-send-swap/README.md；AIX 代码 src/data/transaction/detail/TransactionDetailData.ts
+source_section: Transaction & History / Card Transaction Details、Crypto Transaction Details、Swap Details；Wallet Deposit/Send/Swap；前端 CardTransactionDetail / CryptoTransactionDetail / OtcTransactionDetail 字段
+last_updated: 2026-05-29
 owner: 吴忆锋
 readers: [product, ui, dev, qa, business, ai]
 depends_on:
@@ -26,6 +26,35 @@ depends_on:
 > 本文件是对 Card Transaction Detail、Wallet Transaction Detail、Deposit Transaction Detail 相关历史 PRD / DTC 文档内容的 AI-readable 结构化转译稿。  
 > 本文件定位为单笔交易详情事实中心，承接 Transaction History 的点击详情场景。  
 > 本文件不合并 Card / Wallet 的详情接口，不将两个模块中的 `transactionId` 视为同一业务字段，不补写未确认的关联关系。
+
+> Code alignment note: 2026-05-29 按 AIX 前端代码 `src/data/transaction/detail/TransactionDetailData.ts` 补充交易详情的运行时可确认字段（对应 ALL-GAP-048 / ALL-GAP-049 的前端字段层）。本次只列代码可直接证明的接口与字段，**不补**字段在详情页的排版 / 分组 / 隐藏条件、复制交互、跨模块 ID 关联、状态文案内容——这些仍以 converted-prd 与 ALL-GAP 为准。
+
+## 0.1 代码可确认的运行时事实补充（2026-05-29）
+
+以下内容来自 AIX 当前前端代码实现，仅作为详情字段层的运行时事实补充。
+
+### 0.1.1 交易详情为三个独立接口
+
+代码可确认交易详情分三类，各自是独立的 TS 接口（`TransactionDetailData.ts`），不共用同一字段集、不合并：`CardTransactionDetail`、`CryptoTransactionDetail`、`OtcTransactionDetail`。
+
+### 0.1.2 各详情接口的代码可确认字段
+
+- `CardTransactionDetail`：`id`、`type`、`typeDisplay`、`state`、`stateDisplay`、`stateExplain`、`stateColor`、`truncatedCardNumber`、`indicator`、`amount`、`currency`、`transactionCurrency`、`transactionAmount`、`merchantName`、`merchantCity`、`mcc`、`createdDate`、`exchangeRate`。
+- `CryptoTransactionDetail`：`id`（number）、`type`、`typeDisplay`、`state`、`stateDisplay`、`stateExplain`、`stateColor`、`mainIcon`、`amount`、`currency`、`indicator`、`transactionHash`、`transactionTime`、`network`、`transactionFee`、`gasFee`、`recipientAddressId`、`senderAddressId`。
+- `OtcTransactionDetail`：`id`、`typeDisplay`、`state`、`stateDisplay`、`stateExplain`、`stateColor`、`mainIcon`、`subIcon`、`sellCurrency`、`buyCurrency`、`rate`、`quoteId`、`sellAmount`、`buyAmount`、`completedTime`。
+
+### 0.1.3 展示态字段由后端下发
+
+`typeDisplay` / `stateDisplay` / `stateExplain` / `stateColor` 是后端下发的展示串与颜色，前端直接展示，不在前端硬编码具体文案；`indicator` 为方向标识（与 history 的 `+/-` 一致）。仅 Card 详情含 `exchangeRate`、`mcc`、`merchantCity`；仅 Crypto 详情含 `transactionHash`、`network`、`gasFee`、`transactionFee`、收 / 发地址 ID；仅 OTC 详情含 `sellCurrency/buyCurrency/rate/quoteId`。
+
+### 0.1.4 不从代码推导的内容
+
+以下本次不从代码补充（仍以 converted-prd / ALL-GAP 为准）：
+
+- 各字段在详情页的排版、分组、可见 / 隐藏条件（Gas fee 隐藏、可选字段隐藏、Exchange rate 展示规则等）。
+- 哪些字段支持复制（`transactionHash` / 地址 / `quoteId` 等）及复制交互——这些数据接口未体现复制处理，不写成事实。
+- Card `id` 与 Crypto / Wallet `id`、`relatedId` 的关联（仍 ALL-GAP）。
+- `stateDisplay` / `stateExplain` 文案内容（后端返回）。
 
 ---
 
