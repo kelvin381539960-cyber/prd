@@ -1,11 +1,11 @@
 ---
 module: security
 feature: login-passcode-verification
-version: "1.1"
+version: "1.2"
 status: active
 source_doc: archive/legacy-prd/security/identity-verification/README.md；archive/legacy-prd/app/registration-login/README.md；archive/legacy-prd/card/manage/README.md；archive/legacy-prd/wallet/deposit-send-swap/README.md
 source_section: Security / 7 全局规则、8 需求描述、9 外部接口、10 错误码；Registration BIO / Password；Card Manage PIN / Sensitive operations；Wallet Send/Swap auth
-last_updated: 2026-05-09
+last_updated: 2026-05-28
 owner: 吴忆锋
 depends_on:
   - security/_index
@@ -16,6 +16,41 @@ depends_on:
 ---
 
 # Login Passcode Verification 登录密码认证
+
+> Code alignment note: 2026-05-28 按 AIX 前端代码 `src/data/ivs/IvsData.ts`、`src/data/ivs/IvsRepo.ts`、`src/services/ivs/IvsFlowStarter.ts`、`src/constants/RouterNames.ts` 补充 Login Passcode（密码 challenge）运行时可确认的类型、提交字段与路由。本次只写入代码可直接证明的内容；本文档第 2 节及之后的密码长度（8–32）、复杂度、失败/锁定次数与时长均来自历史 PRD，当前前端代码无法确认，保持原文并在 0.1.4 标注为不可由代码推导。
+
+## 0.1 代码可确认的运行时事实补充（2026-05-28）
+
+以下内容来自 AIX 当前代码实现，仅作为运行时事实补充；若与下文历史 PRD 描述存在差异，以当前代码和后端业务事实复核为准。
+
+### 0.1.1 密码 challenge 类型
+
+代码可确认 `IvsChallengeType` 类型字面量包含 `CURRENT_LOGIN_PASSWORD`（以及 `otp`、`capturingLiveness`、`biometric`）。
+
+### 0.1.2 密码 challenge 提交字段
+
+代码可确认 session 化 IVS verify 通过 `IvsVerifyParams.credential` 提交，`credential` 可包含：
+
+- `otpCode`
+- `password`
+- `signature`
+- `timestamp`
+
+其中登录密码 challenge 使用 `credential.password` 提交，`verify(session)` 请求 `Urls.ivsVerify`。
+
+### 0.1.3 challenge 路由
+
+代码可确认 IVS 路由分发 `gotoIvsNextStep` 中，`CURRENT_LOGIN_PASSWORD` 路由到 `IvsPwdPage`（`RouterNames.IvsPwdPage = "/aix/ivs/ivs-pwd-page"`）。
+
+### 0.1.4 不从代码推导的内容
+
+以下内容本次不从代码补充（第 2–9 节相关数字均来自历史 PRD，未经代码确认）：
+
+- 密码长度 8–32 字符与 Next 启用阈值。
+- 大小写 / 数字 / 符号复杂度要求。
+- 失败 5 次锁 20 分钟、10 次锁 24 小时。
+- 场景隔离锁定的完整范围。
+- `signature` / `timestamp` 在登录密码场景的具体生成与校验规则。
 
 ## 1. 功能定位
 
