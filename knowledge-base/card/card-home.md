@@ -1,11 +1,11 @@
 ---
 module: card
 feature: card-home
-version: "1.5"
+version: "1.6"
 status: conflict
-source_doc: archive/legacy-prd/card/application/README.md；archive/legacy-prd/app/home/README.md；archive/legacy-prd/card/manage/README.md；archive/legacy-prd/security/identity-verification/README.md
-source_section: Application / 6.2 卡片首页；Home / 当前卡片展示逻辑；Manage / Card operations；Security / identity verification
-last_updated: 2026-05-09
+source_doc: archive/legacy-prd/card/application/README.md；archive/legacy-prd/app/home/README.md；archive/legacy-prd/card/manage/README.md；archive/legacy-prd/security/identity-verification/README.md；AIX 代码 src/data/card/manage/CardManagementData.ts
+source_section: Application / 6.2 卡片首页；Home / 当前卡片展示逻辑；Manage / Card operations；Security / identity verification；前端 CardData / WidgetType 模型
+last_updated: 2026-05-29
 owner: 吴忆锋
 readers: [product, ui, dev, qa, business, ai]
 ---
@@ -14,6 +14,22 @@ readers: [product, ui, dev, qa, business, ai]
 
 > Source alignment note: 本文件已按 converted-prd 做双向覆盖校验，并发现 Home PRD 与 Card Application PRD 对部分首页卡片点击跳转存在冲突。本文件状态暂标 `conflict`；在产品确认前，不得把冲突项写成唯一事实。
 
+> Code alignment note: 2026-05-29 按 AIX 前端代码 `src/data/card/manage/CardManagementData.ts` 补充卡首页 widget 化数据模型的运行时可确认事实。本文件 `status=conflict`（首页点击跳转存在 PRD 冲突）；本次只补代码可确认的**数据结构**，**不解决**点击跳转冲突项。
+
+## 0.1 代码可确认的运行时事实补充（2026-05-29）
+
+### 0.1.1 卡首页数据（CardManagementData / CardData）
+
+代码可确认卡首页为多卡列表：`CardManagementData { cardList: CardData[] }`。`CardData` 字段：`cardId`、`cardStatus`（见 `status-and-operations.md` 0.1.1）、`cardType`、`cardStyle` / `cardBackStyle`（卡面图 URL）、`truncatedCardNumber`（脱敏，如 `****3104`）、`lastFourDigitCardNo`（如 `3104`）、`cardNoColor`、`isSetPin`、`cardTypeDisplayName`、`widgets[]`。
+
+### 0.1.2 首页 Widget 类型（WidgetType）
+
+代码可确认 `WidgetType` 九值：`CardReviewTips`、`CardPreparingShip`、`AddGoogleWallet`、`CardActions`、`CarrierInfo`、`LogisticsTimeline`、`OrderInfo`、`CardInfo`、`TransactionHistory`。首页按 `CardWidget` 联合类型逐 widget 渲染（每个 widget = `{ type, data }`，`data` 结构随 `type` 不同）。
+
+### 0.1.3 不从代码推导 / 冲突保留
+
+- 各 widget 在不同 `cardStatus` 下的出现条件与排序。
+- 首页卡片点击跳转（PRD 冲突项）—— 保持 `conflict`，待产品确认，不写成唯一事实。
 
 ## 1. 文档信息
 
