@@ -1,11 +1,11 @@
 ---
 module: security
 feature: biometric-verification
-version: "1.1"
+version: "1.2"
 status: active
 source_doc: archive/legacy-prd/security/identity-verification/README.md；archive/legacy-prd/app/registration-login/README.md；archive/legacy-prd/card/manage/README.md；archive/legacy-prd/wallet/deposit-send-swap/README.md
 source_section: Security / 7 全局规则、8 需求描述、9 外部接口、10 错误码；Registration BIO / Password；Card Manage PIN / Sensitive operations；Wallet Send/Swap auth
-last_updated: 2026-05-09
+last_updated: 2026-05-28
 owner: 吴忆锋
 depends_on:
   - security/_index
@@ -16,6 +16,80 @@ depends_on:
 ---
 
 # Biometric Verification 设备生物识别认证
+
+> Code alignment note: 2026-05-28 按 AIX 前端代码 `src/aix/biometric/EnableBiometricService.ts`、`src/data/biometric/EnableBiometricRepo.ts`、`src/data/biometric/EnableBiometricApiRepo.ts`、`src/data/biometric/EnableBiometricData.ts`、`src/services/ivs/IvsFlowStarter.ts` 补充设备生物识别运行时可确认的能力、接口、字段、错误枚举与路由。本次只写入代码可直接证明的内容；本文档第 2 节及之后关于失败次数策略、平台尝试次数细节、锁定时长等保持原文并在 0.1.6 标注为不可由代码推导。
+
+## 0.1 代码可确认的运行时事实补充（2026-05-28）
+
+以下内容来自 AIX 当前代码实现，仅作为运行时事实补充；若与下文历史 PRD 描述存在差异，以当前代码和后端业务事实复核为准。
+
+### 0.1.1 Biometric service 能力
+
+代码可确认 `EnableBiometricService` 提供：
+
+- `checkDeviceSupport()`
+- `checkAvailability()`
+- `requestVerification()` → 后端 `Urls.biometricEnableStep1`
+- `enable(payload)`（设备端开启）
+- `disable()` → 后端 `Urls.biometricDisable`
+- `submitSignal(payload)` → 后端 `Urls.biometricEnableStep2`
+- `doBiometricSignature(message)`
+- `clearBiometricData()`
+
+### 0.1.2 开启生物识别 step2 入参
+
+代码可确认 `EnableBiometricStep2Payload` 包含：
+
+- `publickey`（代码字段名即为此拼写）
+- `timestamp`
+- `signature`
+
+### 0.1.3 设备端返回结构
+
+代码可确认 `EnableBiometricResult` 包含：
+
+- `ok`
+- `enabled`
+- `signal`，可选。
+- `publicKey`，可选。
+- `timestamp`，可选。
+- `errorMessage`，可选。
+- `errorCode`，可选。
+
+`EnableBiometricAvailability` 包含 `available`。
+
+`doBiometricSignature` 返回 `BiometricSignatureResult`：成功为 `{ ok: true, signal, timestamp }`，失败为 `{ ok: false, code, message? }`。
+
+### 0.1.4 错误枚举与 Android 错误码映射
+
+代码可确认 `BiometricError` 枚举：
+
+- `USER_CANCEL`
+- `SYSTEM_ERROR`
+- `AUTH_DENIED`
+- `USER_ATTEMPTS_EXCEEDED`
+
+Android 原生错误码映射：
+
+- `7`（ERROR_LOCKOUT）/ `9`（ERROR_LOCKOUT_PERMANENT）→ `USER_ATTEMPTS_EXCEEDED`
+- `10`（用户取消）/ `5`（系统取消）/ `13`（负按钮）→ `USER_CANCEL`
+- 其余 → `SYSTEM_ERROR`
+
+### 0.1.5 IVS 中 biometric challenge 路由与可用性过滤
+
+代码可确认：
+
+- IVS 路由分发中 `BIOMETRIC` 路由到 `IvsBiometricPage`（`/aix/ivs/ivs-biometric-page`），以 modal 方式打开，且会再次 `checkAvailability()` 确认可用后才跳转。
+- 启动 IVS 流程时若设备 biometric 不可用，会从 `nextStage.options` 中过滤掉 challenge type 为 `BIOMETRIC` 的选项。
+
+### 0.1.6 不从代码推导的内容
+
+以下内容本次不从代码补充：
+
+- 生物识别失败次数的统一上限策略。
+- iOS / Android 平台具体可尝试次数（代码仅做错误码归类）。
+- 失败后锁定时长。
+- 设备端生物识别与后端 signature 校验的完整安全协议。
 
 ## 1. 功能定位
 
