@@ -3,14 +3,49 @@ source_section: Security / 7 全局规则、8 需求描述、9 外部接口、10
 source_doc: archive/legacy-prd/security/identity-verification/README.md；archive/legacy-prd/app/registration-login/README.md；archive/legacy-prd/card/manage/README.md；archive/legacy-prd/wallet/deposit-send-swap/README.md
 module: security
 feature: password-policy
-version: "1.1"
-last_updated: 2026-05-09
+version: "1.2"
+last_updated: 2026-05-28
 authors: [吴忆锋]
 status: released
 depends_on: []
 ---
 
 # Password Policy 密码策略
+
+> Code alignment note: 2026-05-28 按 AIX 前端代码 `src/data/set-pwd/SetPwdRepo.ts`、`src/data/set-pwd/SetPwdData.ts` 补充设置 / 找回 / 修改密码的运行时可确认接口与入参。本次只写入代码可直接证明的内容；本文档第 2 节的最小/最大长度、复杂度、校验时机、显示控制等均来自历史 PRD / UI 规范，当前前端代码无法确认，保持原文并在 0.1.3 标注为不可由代码推导。
+
+## 0.1 代码可确认的运行时事实补充（2026-05-28）
+
+以下内容来自 AIX 当前代码实现，仅作为运行时事实补充；若与下文历史 PRD 描述存在差异，以当前代码和后端业务事实复核为准。
+
+### 0.1.1 密码相关接口
+
+代码可确认 `SetPwdRepo` 接口：
+
+- `registerStep2(payload)` → `Urls.registerStep2`
+- `initForgetPwd(method)` → `Urls.forgetPwdStep1`
+- `setForgetPwd(method, newPassword)` → `Urls.forgetPwdStep2`
+- `initChangedPwd()` → `Urls.changePwdStep1`
+- `setChangePwd(newPassword)` → `Urls.changePwdStep2`
+
+### 0.1.2 入参结构
+
+代码可确认：
+
+- `RegisterStep2Request` 包含 `recommendTag`（可选）、`password`、`otpSessionId`、`dataConsent`（可选）。
+- `ForgotPwdMethod` 为联合类型，支持 `{ email }`、`{ mobile, areaCode }`、`{ sessionId }` 三种形态；`setForgetPwd` 会把 `newPassword` 与 method 合并提交。
+- `setChangePwd` 仅提交 `newPassword`。
+
+### 0.1.3 不从代码推导的内容
+
+以下内容本次不从代码补充（第 2 节相关规则来自历史 PRD / UI 规范，未经代码确认）：
+
+- 密码最小 8 / 最大 32 字符限制。
+- 大小写字母、数字、特殊符号复杂度要求。
+- 失焦校验 / 实时校验等校验时机。
+- 明文 / 密文显示控制与眼睛图标交互。
+- 两次输入一致性校验文案。
+- 后端对密码强度的实际校验规则。
 
 ## 1. 功能概述
 
