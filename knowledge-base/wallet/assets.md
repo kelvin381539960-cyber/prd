@@ -1,12 +1,12 @@
 ---
 module: wallet
 feature: assets
-version: "1.1"
+version: "1.2"
 status: active
 doc_type: ai-readable-prd-translation
-source_doc: archive/legacy-prd/wallet/asset/README.md；archive/legacy-prd/wallet/deposit-send-swap/README.md；archive/legacy-prd/kyc/wallet-opening/README.md；archive/legacy-prd/security/identity-verification/README.md；archive/legacy-prd/app/transaction-history/README.md
-source_section: Wallet Asset / 4.1 钱包首页 My Assets；Transaction History / 全量交易
-last_updated: 2026-05-09
+source_doc: archive/legacy-prd/wallet/asset/README.md；archive/legacy-prd/wallet/deposit-send-swap/README.md；archive/legacy-prd/kyc/wallet-opening/README.md；archive/legacy-prd/security/identity-verification/README.md；archive/legacy-prd/app/transaction-history/README.md；AIX 代码 src/data/wallet/WalletData.ts
+source_section: Wallet Asset / 4.1 钱包首页 My Assets；Transaction History / 全量交易；前端 WalletAssetValueDto / CryptoCurrency / CryptoMainNet 枚举
+last_updated: 2026-05-29
 owner: 吴忆锋
 readers: [product, ui, dev, qa, business, ai]
 depends_on:
@@ -26,6 +26,34 @@ depends_on:
 > 本文件不是新迭代 PRD，不新增原始 PRD 未确认事实。  
 > 本文件主事实是 Wallet 首页 / My Assets 页面，而不是单纯余额接口文档。余额接口仅作为资产页展示的支撑能力。  
 > 本文件不承接 Card balance、交易历史统一层、对账链路、KYC / 开户准入、Send / Swap 独立能力主事实。
+
+> Code alignment note: 2026-05-29 按 AIX 前端代码 `src/data/wallet/WalletData.ts` 补充资产展示的运行时可确认结构与枚举（对应 ALL-GAP-056 的前端展示层）。本次只列代码可直接证明的数据结构、币种 / 网络枚举与展示字段，**不补**总额计算规则、排序规则、Withdraw 隐藏规则、KYC 准入——这些仍以 converted-prd 与 ALL-GAP 为准。
+
+## 0.1 代码可确认的运行时事实补充（2026-05-29）
+
+以下内容来自 AIX 当前前端代码实现，仅作为资产展示层的运行时事实补充。
+
+### 0.1.1 资产金额展示字段（WalletAssetValueDto）
+
+代码可确认 `WalletAssetValueDto { amount, currency, symbol?, currencyDisplay?, displayText }`（`WalletData.ts`）。`displayText` 是数据层预格式化的展示字符串；前端展示金额时使用 `displayText`，不在前端自行拼接数字与符号。
+
+### 0.1.2 资产数据分层（VO / DTO）
+
+资产页支撑数据结构代码可确认存在：`WalletAssetsResult`、`CurrencyVO`、`WalletAssetsApiResponse`、`StableCoinDto`（`WalletData.ts`，VO / DTO 分层）。本文不把各结构的全部字段逐一写成产品事实，仅登记结构存在性与上面已确认的 `WalletAssetValueDto` 字段。
+
+### 0.1.3 支持的稳定币与主网枚举
+
+- `CryptoCurrency` 代码可确认四种：`FDUSD`、`USDC`、`USDT`、`WUSD`。
+- `CryptoMainNet` 代码可确认四网（含枚举值）：`Ethereum=3`、`BSC=7`、`Base=8`、`Solana=9`。
+
+### 0.1.4 不从代码推导的内容
+
+以下本次不从代码补充（仍以 converted-prd / ALL-GAP 为准）：
+
+- Total Asset 总额的计算规则、汇总币种与刷新时机。
+- 稳定币 / 资产列表的排序规则。
+- Withdraw 入口隐藏规则、KYC / 开户准入条件。
+- `displayText` 的具体格式（小数位、千分位、符号位置）——由数据层决定，前端不硬编码。
 
 ---
 
