@@ -1,11 +1,11 @@
 ---
 module: card
 feature: application
-version: "1.4"
+version: "1.5"
 status: active
-source_doc: archive/legacy-prd/card/application/README.md；archive/legacy-prd/app/home/README.md；archive/legacy-prd/kyc/wallet-opening/README.md；archive/legacy-prd/security/identity-verification/README.md；archive/legacy-prd/card/manage/README.md
-source_section: Card Application / 2.1 申卡说明；6.1 申请开卡；Home / 申卡入口；Security / Face Auth；KYC / wallet opening
-last_updated: 2026-05-09
+source_doc: archive/legacy-prd/card/application/README.md；archive/legacy-prd/app/home/README.md；archive/legacy-prd/kyc/wallet-opening/README.md；archive/legacy-prd/security/identity-verification/README.md；archive/legacy-prd/card/manage/README.md；AIX 代码 src/data/card/CardData.ts
+source_section: Card Application / 2.1 申卡说明；6.1 申请开卡；Home / 申卡入口；Security / Face Auth；KYC / wallet opening；前端 CardType / CardApplyData / CardFee 模型
+last_updated: 2026-05-29
 owner: 吴忆锋
 readers: [product, ui, dev, qa, business, ai]
 ---
@@ -14,6 +14,54 @@ readers: [product, ui, dev, qa, business, ai]
 
 > Source alignment note: 本文件已按 `archive/legacy-prd/card/application/README.md` 进行 Evidence→KB 补齐，并同步核对 Home、KYC、Security 支撑证据。补齐重点包括多币种制卡费支付、Fee waiver、余额校验、Face Auth token、Billing/Mailing 字段限制、实体卡打印名、MGM 减免费状态和结果页规则。
 
+
+> Code alignment note: 2026-05-29 按 AIX 前端代码 `src/data/card/CardData.ts` 补充申卡入口与制卡费模型的运行时可确认事实。本次只写该文件可直接证明的枚举、数据结构与费用计算规则；申卡下单确认接口（`order-confirm`）因源码访问受限本次未读取，连同 Face Auth token / DTC 错误码 / MGM 状态机仍以 converted-prd 为准。
+
+## 0.1 代码可确认的运行时事实补充（2026-05-29）
+
+以下内容来自 AIX 当前前端代码实现（`src/data/card/CardData.ts`），仅作为申卡数据模型的运行时事实补充。
+
+### 0.1.1 卡类型枚举（CardType）
+
+代码可确认 `CardType`：`Physical="PHYSICAL"`、`Virtual="VIRTUAL"`。卡类型选项 `cardOptions` 按 `order` 排序，虚拟卡在前、物理卡在后。
+
+### 0.1.2 申卡入口数据（CardApplyData）
+
+代码可确认字段：
+
+- `applyOrder?` — 申请幂等 ID，防重复提交。
+- `cardOptions?: CardOption[]` — 卡类型选项列表。
+- `hasApplied?` — 是否已申请过卡（`true`=非首次）。
+- `hasDiscount?` — 是否有 MGM 可用减免。
+- `needTopup?` — 是否需要充值（注释规则：`card.balance.check.enabled==false` 直接 `false`；否则任一加密币余额 >0 为 `false`，全部为 0 才 `true`）。
+- `selectPlan?: SelectPlan[]` — 选卡计划区域，仅 `hasApplied==false`（首次）时返回。
+
+### 0.1.3 卡选项与卡面（CardOption / CardFaceList / CurrencyList）
+
+- `CardOption { cardFaceList?, cardFee?, cardType?, currencyList?, email?, phoneCountryCode?, countryNo?, phoneNumber?, fullName?, originalFullName?, order?, hasMore?, moreForwardUrl? }`。
+- `currencyList` 为卡面可显示币种，**默认选中 USDT**；`CurrencyList { code?, iconUrl?, name?, desc?, order? }`，code 例：`USDT` / `USDC` / `WUSD` / `FDUSD`。
+- `CardFaceList { backUrl?, desc?, code?, colorRgb?, frontUrl?, name?, order? }`（卡面颜色 / 图片）。
+
+### 0.1.4 制卡费模型（CardFee）—— 含可确认计算规则
+
+代码可确认 `CardFee` 字段与规则：
+
+- `cardFee` / `cardFeeDisplay` — 原始费用 / 格式化展示（按 USD；整数不显示小数，否则保留 2 位）。
+- `discount` / `discountDisplay` / `discountTag` — 减免金额 / 展示 / 标签（如 `Invite Reward`，仅金额 >0 显示；为 0 时 display 显示 `--`）。
+- `isFree` — **规则：`cardFee - discount <= 0` 时为 `true`**。
+- `payableCardFee` / `payableCardFeeDisplay` — **规则：`max(cardFee - discount, 0)`**，应付费用。
+
+前端展示金额以 `*Display` 字段为准，不在前端自行拼接数字与币种。
+
+### 0.1.5 选卡计划区块（SelectPlan）
+
+代码可确认 `SelectPlan { actionType?(native/h5/deeplink), actionUrl?, order?, sectionData?, sectionType?, subTitle?, title?, visible? }`，按 `sectionType` 渲染不同模块（URL / Feature / FAQ 三区，按 `order` 排）。
+
+### 0.1.6 本次未从代码补充
+
+- 申卡 Checkout / 下单确认接口字段（`order-confirm/CardOrderConfirmData.ts` 本次因 `~/Downloads` 源码访问受限未读取，留待恢复后补）。
+- Billing / Mailing 地址字段限制、实体卡打印名规则（仍以 converted-prd 为准）。
+- Face Auth token、DTC 申卡接口错误码、MGM 减免费状态机（后端 / 流程，仍以 converted-prd 为准）。
 
 ## 1. 文档信息
 
