@@ -1,11 +1,11 @@
 ---
 module: card
 feature: status-and-operations
-version: "1.1"
+version: "1.2"
 status: active
-source_doc: archive/legacy-prd/card/manage/README.md；archive/legacy-prd/security/identity-verification/README.md；archive/legacy-prd/card/application/README.md
-source_section: Card Manage / 6.4 状态与操作限制；7.4 Lock；7.5 Unlock；8 外部接口
-last_updated: 2026-05-09
+source_doc: archive/legacy-prd/card/manage/README.md；archive/legacy-prd/security/identity-verification/README.md；archive/legacy-prd/card/application/README.md；AIX 代码 src/data/card/manage/CardManagementData.ts、CardManagementRepo.ts
+source_section: Card Manage / 6.4 状态与操作限制；7.4 Lock；7.5 Unlock；8 外部接口；前端 CardStatus / CardActionItem / lock-unlock 接口
+last_updated: 2026-05-29
 owner: 吴忆锋
 readers: [product, ui, dev, qa, business, ai]
 ---
@@ -14,6 +14,32 @@ readers: [product, ui, dev, qa, business, ai]
 
 > Source alignment note: 本文件已按 converted-prd 做双向覆盖校验，补齐 Card Manage 证据缺口。
 
+> Code alignment note: 2026-05-29 按 AIX 前端代码 `src/data/card/manage/CardManagementData.ts`、`CardManagementRepo.ts` 补充卡状态枚举与操作接口的运行时可确认事实。本次只写代码可直接证明的枚举、操作类型与读写接口；**不补**状态进入 / 退出条件、各操作在不同状态下的可用性矩阵（仍以 converted-prd / 后端为准）。
+
+## 0.1 代码可确认的运行时事实补充（2026-05-29）
+
+### 0.1.1 卡状态枚举（CardStatus）
+
+代码可确认 `CardStatus` 四值（`CardManagementData.ts`）：`Pending='PENDING'`、`PendingActivation='PENDING_ACTIVATION'`、`Active='ACTIVE'`、`Frozen='SUSPENDED'`。注意枚举键 `Frozen` 对应值 **`SUSPENDED`**（冻结 = 后端 `SUSPENDED`）。
+
+### 0.1.2 卡操作类型（CardActionItem.actionType）
+
+代码可确认卡操作按钮类型为联合字面量：`CARD_DETAIL | SET_PIN | LOCK | UNLOCK | CHANGE_PIN`（`CardActionItem`）。操作按钮由 `CardActionsData.actions[]` 下发，每项含 `label / icon / showRedDot? / cardId`。
+
+### 0.1.3 状态 / 操作读写接口
+
+代码可确认（`CardManagementRepo.ts`）：
+
+- 卡管首页：`getCardManagementInfo()` → GET `Urls.cardManagementList`，返回 `CardManagementData { cardList: CardData[] }`。
+- 锁卡：`lockCard(cardId)` → POST `Urls.cardLock`，body `{ cardId }`。
+- 解锁：`unlockCard(cardId)` → POST `Urls.cardUnlock`，body `{ cardId }`。
+
+Lock / Unlock 对应状态 `ACTIVE ⇄ SUSPENDED`（结合 0.1.1；具体允许的状态转移条件仍以 converted-prd / 后端为准）。
+
+### 0.1.4 不从代码推导的内容
+
+- 各操作在不同 `CardStatus` 下的可用性矩阵、红点出现条件。
+- 状态进入 / 退出的后端条件、Lock / Unlock 失败文案（后端透传）。
 
 ## 1. 文档信息
 
