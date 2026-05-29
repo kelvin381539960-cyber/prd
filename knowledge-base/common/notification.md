@@ -1,11 +1,11 @@
 ---
 module: common
 feature: notification
-version: "2.0"
+version: "2.1"
 status: active
-source_doc: archive/legacy-prd/notification/push-inbox/README.md；archive/legacy-prd/notification/system-email/README.md
-source_section: Notification push/inbox / 接入链路、Push、消息中心、通知设置、Webhook；System Email / interface interaction
-last_updated: 2026-05-09
+source_doc: archive/legacy-prd/notification/push-inbox/README.md；archive/legacy-prd/notification/system-email/README.md；AIX 代码 src/data/user/NotificationConfigData.ts、src/data/user/NotificationConfigRepo.ts
+source_section: Notification push/inbox / 接入链路、Push、消息中心、通知设置、Webhook；System Email / interface interaction；前端 NotificationConfigCategory / Channel / Preference 结构
+last_updated: 2026-05-29
 owner: 吴忆锋
 readers: [product, ui, dev, qa, business, ai]
 depends_on:
@@ -17,6 +17,45 @@ depends_on:
 ---
 
 # Notification Push / 站内信公共能力
+
+> Code alignment note: 2026-05-29 按 AIX 前端代码 `src/data/user/NotificationConfigData.ts`、`src/data/user/NotificationConfigRepo.ts` 补充通知偏好设置的运行时可确认事实。本次只写代码可直接证明的枚举、数据结构与读写接口；**不补**默认开关值、后端下发文案、Push 链路 / device-token / 未读计数等后端 / 原生侧行为——这些仍以 converted-prd 为准。
+
+## 0.1 代码可确认的运行时事实补充（2026-05-29）
+
+以下内容来自 AIX 当前前端代码实现，仅作为通知偏好设置的运行时事实补充。
+
+### 0.1.1 通知偏好分类与渠道枚举
+
+代码可确认（`NotificationConfigData.ts`）：
+
+- `NotificationConfigCategory`：`Promotion="PROMOTION"`、`System="SYSTEM"`（两类）。
+- `NotificationConfigChannel`：`Push="push"`、`Sms="sms"`、`Email="email"`（三渠道）。
+
+### 0.1.2 通知偏好数据结构
+
+代码可确认（`NotificationConfigData.ts`）：
+
+- `NotificationConfigPreference { category, push?, sms?, email? }`
+- `NotificationConfigSection { category, title, subtitle, items: NotificationConfigToggleItem[] }`
+- `NotificationConfigToggleItem { channel, title, enabled? }`
+- `NotificationConfigResponse { preference: NotificationConfigPreference[] }`
+
+### 0.1.3 通知偏好读写接口
+
+代码可确认（`NotificationConfigRepo.ts`）：
+
+- 读取：`getNotificationConfig()` → GET `Urls.notificationConfig`。
+- 更新：`updateNotificationPreference(category, channel, enabled)` → POST `Urls.notificationConfig`，body `{ category, channel, enabled }`。
+
+即通知设置以「分类 × 渠道」开关矩阵管理；每切换一个开关对应一次 POST。
+
+### 0.1.4 不从代码推导的内容
+
+以下本次不从代码补充（仍以 converted-prd / 后端为准）：
+
+- 各分类 / 渠道开关的默认值，以及后端下发的 `title` / `subtitle` 文案。
+- Push 链路、`device-token` 上报、消息中心未读计数等后端 / 原生侧行为。
+- MoEngage / Webhook 等第三方接入细节。
 
 ## 1. 文档定位
 
