@@ -1,11 +1,11 @@
 ---
 module: account
 feature: login
-version: "2.1"
+version: "2.2"
 status: active
 source_doc: "archive/legacy-prd/app/registration-login/README.md；archive/legacy-prd/security/identity-verification/README.md"
-source_section: "registration-login / 7.2 登录功能；security / 认证方式能力矩阵、OTP、Email OTP、Face Auth、BIO"
-last_updated: 2026-05-09
+source_section: "registration-login / 7.2 登录功能；security / 认证方式能力矩阵、OTP、Email OTP、Face Auth、BIO；AIX 代码 src/aix/login/*、src/data/login/*、src/data/user/UserInfo.ts"
+last_updated: 2026-05-29
 owner: 吴忆锋
 depends_on:
   - account/_index
@@ -23,6 +23,62 @@ tags: [login, account, biometric, email, phone, otp, country-selector]
 
 > Source alignment note: 本文件已开始按 `archive/legacy-prd/app/registration-login/README.md` 与 `archive/legacy-prd/security/identity-verification/README.md` 校准。登录主流程、Quick Login、Enable BIO 在注册登录 PRD 中有来源；但 Login Page 中“邮箱 / 手机号输入切换、邮箱输入框、手机号输入框”等部分在 converted-prd 中带删除线，同时 Select Country Page 又仍有正文描述，因此登录输入方式范围暂标 `DELETED_SOURCE`。
 
+> Code alignment note: 2026-05-29 按 AIX 前端代码 `src/aix/login/useLoginStore.ts`、`src/aix/login/LoginService.ts`、`src/data/login/LoginData.ts`、`src/data/login/LoginRepo.ts`、`src/data/user/UserInfo.ts` 补充登录运行时可确认事实。本次只写代码可直接证明的内容；账户状态拦截、国家隐藏规则、Quick Login 文案、BIO 锁定时长 / 次数等仍以历史 PRD 与 Security 模块为准。
+
+## 0.1 代码可确认的运行时事实补充（2026-05-29）
+
+以下内容来自 AIX 当前代码实现，仅作为运行时事实补充；若与下文历史 PRD 描述存在差异，以当前代码和后端业务事实复核为准。
+
+### 0.1.1 登录方式（LoginType）
+
+代码可确认 `LoginType` 枚举三种：`Phone='phone'`、`Email='email'`、`Biometric='biometric'`（`useLoginStore.ts`）。
+
+### 0.1.2 登录请求结构（按方式构造）
+
+`LoginRequest { email?, areaCode?, mobile?, timestamp?, signature? }`（`LoginData.ts`）。`useLoginStore.login()` 按当前登录类型构造请求：
+
+- Phone → `{ mobile, areaCode, timestamp: Date.now() }`
+- Email → `{ email, timestamp: Date.now() }`
+- Biometric → `{ signature, timestamp }`
+
+`DefaultLoginRepo` 提交前过滤掉 null / 空字符串字段，再 POST `Urls.login`。
+
+> 注：`LoginRepo` 在代码中带注释 “Default mock implementation. Replace with real API when ready.”，故请求结构可确认，但是否为最终生产实现以后端联调为准。
+
+### 0.1.3 登录响应 = 用户档案（UserInfo）
+
+`LoginResponse extends UserInfo`。`UserInfo` 代码可确认字段：`userId`（必填）、`photoUrl?`、`aixTag?`、`nickname?`、`status?`、`biometricEnable?`、`phone?`、`email?`、`verificationStatus?`、`message?{ unReadCount?, latestMessageTime? }`、`lastLoginCountry?`、`kycVerified?`、`countryFromKyc?`、`hasVirtualCard?`、`hasPhysicalCard?`、`birthYearFromKyc?`、`genderFromKyc?`。
+
+### 0.1.4 登录成功后的生物识别引导
+
+登录成功（`setUserInfo(data)` 返回真）后代码执行：重置推送上报状态 → `handleBiometricUserSwitch(userId, "login")` → `checkDeviceSupport()` + `checkAvailability()` → `navigateAfterLogin({ enterMainType: login, shouldEnableBiometric: deviceSupported && !biometricAvailable })`。即：仅当设备支持生物识别且当前尚未启用时，才在登录后引导进入 Enable BIO。
+
+### 0.1.5 Biometric 快捷登录（triggerBiometricLogin）
+
+仅当 `biometricEnabled` 为真且非加载中时触发；调用 `doBiometricSignature("")` 取得签名后，以 `Biometric` 类型走 `login()`。失败按 `BiometricError`（详见 `security/biometric-verification`）：
+
+- `USER_ATTEMPTS_EXCEEDED` → 清除本地生物识别数据、禁用 BIO、置 `isBiometricLockedOut=true`
+- `USER_CANCEL` → 静默处理
+- 其他 → 弹错误提示
+
+### 0.1.6 登录错误码分支
+
+`useLoginStore.login()` 按 `AixError.code` 分支（前端只做响应，规则由后端错误码驱动）：
+
+- `IVS_CODE_RESP_HANDLED` → 订阅 IVS 事件，成功则重试 `login()`，失败弹提示（衔接 Security IVS 流程）
+- `USER_NOT_FOUND` → 设置 `loginError = aixError.message ?? "Login Failed"`（账号不存在态）。**账号不存在的展示文案由后端 `message` 决定，前端没有固定的 i18n 英文文案，兜底仅为 `"Login Failed"`**（对应 ALL-GAP-042：前端无可确认固定文案）。
+- `DEVICE_BIOMETRIC_STATUS_NOT_MATCH` / `BIO_INCORRECT` → 清除生物识别数据、禁用 BIO、snackbar 报错
+
+### 0.1.7 不从代码推导的内容
+
+以下本次不从代码补充（仍以历史 PRD / Security 模块为准）：
+
+- 账户 Active / Banned / Closed 拦截规则与文案。
+- 国家 / 地区列表展示范围、中国 / 中国台湾隐藏规则。
+- Quick Login 展示文案与具体 UI 触发条件。
+- BIO 锁定时长、失败次数阈值。
+- 登录是否强制二次身份验证的具体触发策略（由后端错误码驱动）。
+- Login Page 邮箱 / 手机号输入切换范围（converted-prd 中带删除线，维持 `DELETED_SOURCE`）。
 
 ## 1. 文档定位
 
