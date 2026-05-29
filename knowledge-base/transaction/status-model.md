@@ -1,12 +1,12 @@
 ---
 module: transaction
 feature: status-model
-version: "3.1"
+version: "3.2"
 status: active
 doc_type: ai-readable-prd-translation
-source_doc: archive/legacy-prd/app/transaction-history/README.md；archive/legacy-prd/card/transaction/README.md；archive/legacy-prd/wallet/deposit-send-swap/README.md
-source_section: Transaction & History / Type & Status mapping；Card Transaction；Wallet Deposit/Send/Swap
-last_updated: 2026-05-09
+source_doc: archive/legacy-prd/app/transaction-history/README.md；archive/legacy-prd/card/transaction/README.md；archive/legacy-prd/wallet/deposit-send-swap/README.md；AIX 代码 src/data/transaction/TransactionHistoryData.ts、src/data/wallet/WalletData.ts
+source_section: Transaction & History / Type & Status mapping；Card Transaction；Wallet Deposit/Send/Swap；前端 TransactionState / TransactionItem.status / WalletTxStatusEnum 枚举
+last_updated: 2026-05-29
 owner: 吴忆锋
 readers: [product, ui, dev, qa, business, ai]
 depends_on:
@@ -27,6 +27,37 @@ depends_on:
 > 本文件是对 Card / Wallet / Deposit 相关交易状态、外部结果、ActivityType 的 AI-readable 结构化转译稿。  
 > 本文件定位为状态来源字典，不是新的统一状态机，不创建新状态，不合并 Card / Wallet / Deposit 状态。  
 > 所有状态映射、进入 / 退出条件、前端展示文案、跨模块等价关系，统一进入 ALL-GAP。
+
+> Code alignment note: 2026-05-29 按 AIX 前端代码 `src/data/transaction/TransactionHistoryData.ts`、`src/data/wallet/WalletData.ts` 补充前端状态枚举与着色的运行时可确认事实（对应 ALL-GAP-051 / ALL-GAP-053 的前端枚举层）。本次只写代码可直接证明的枚举值与颜色，**不补**后端状态到前端的映射规则、状态进入 / 退出条件、状态文案内容——这些仍以 ALL-GAP 与后端为准。
+
+## 0.1 代码可确认的运行时事实补充（2026-05-29）
+
+以下内容来自 AIX 当前前端代码实现，仅作为前端枚举层的运行时事实补充；与第 3.4 节后端状态字典是不同层，不能互相等价覆盖。
+
+### 0.1.1 通用交易状态枚举（TransactionState）
+
+代码可确认 `TransactionState` 六值（`TransactionHistoryData.ts`）：`Pending='PENDING'`、`Success='SUCCESS'`、`Refunded='REFUNDED'`、`Declined='DECLINED'`、`UnderReview='UNDER_REVIEW'`、`Cancelled='CANCELLED'`。与本文第 B 节「AIX 前端全量交易状态」一致，此处给出确定的枚举字符串值。
+
+### 0.1.2 状态着色（stateColor）
+
+`TransactionHistoryItem` 计算 `stateColor`（`TransactionHistoryData.ts`）：`REFUNDED → #FF8E2C`（橙）、`DECLINED → #DA1E28`（红）、其余状态 → `#767676`（灰）。即前端仅对「已退款」与「被拒 / 失败」单独着色，其余状态统一用灰色。
+
+### 0.1.3 Wallet 模块内交易项三态（与通用 TransactionState 不同的独立枚举）
+
+`wallet` 模块的 `TransactionItem.status` 前端只有三态：`"pending" | "completed" | "failed"`（`WalletData.ts`）。这是 Wallet 模块自身列表 VO 的独立类型定义，与上文 `TransactionState`（六态）以及第 3.4.1 节后端 Wallet `state`（`PENDING/PROCESSING/AUTHORIZED/COMPLETED/REJECTED/CLOSED`）是**三个不同的枚举**。代码只能确认它们各自的取值，**不能**确认彼此的映射关系。
+
+### 0.1.4 Swap 订单状态枚举（WalletTxStatusEnum）
+
+`WalletTxStatusEnum` 代码可确认五值（`WalletData.ts`，用于 swap order）：`INITIAL`、`PENDING`、`COMPLETED`、`EXPIRED`、`CANCELLED`。
+
+### 0.1.5 不从代码推导的内容
+
+以下本次不从代码补充（仍以 ALL-GAP / 后端为准）：
+
+- 后端 Wallet `state`（六态）→ 前端 `TransactionState`（六态）/ Wallet 三态的具体映射（仍 ALL-GAP-051 / ALL-GAP-053）。
+- 各状态进入 / 退出条件（仍 ALL-GAP-050）。
+- `stateExplain` / `stateDisplay` 文案内容（由后端返回，非前端硬编码）。
+- Card DTC 状态 → AIX 展示状态映射（仍以 `card/transaction-detail.md` 与 ALL-GAP-053 为准）。
 
 ---
 
