@@ -1,11 +1,11 @@
 ---
 module: card
 feature: card-pin
-version: "1.1"
+version: "1.2"
 status: active
-source_doc: archive/legacy-prd/card/manage/README.md；archive/legacy-prd/security/identity-verification/README.md；archive/legacy-prd/card/application/README.md
-source_section: Card Manage / 7.3 Set PIN / Change PIN；8 外部接口；Security / Identity Verification
-last_updated: 2026-05-09
+source_doc: archive/legacy-prd/card/manage/README.md；archive/legacy-prd/security/identity-verification/README.md；archive/legacy-prd/card/application/README.md；AIX 代码 src/data/card/manage/CardSetPinData.ts、CardSetPinRepo.ts
+source_section: Card Manage / 7.3 Set PIN / Change PIN；8 外部接口；Security / Identity Verification；前端 ToSetPinType / 公钥加密 set-pin 链路
+last_updated: 2026-05-29
 owner: 吴忆锋
 readers: [product, ui, dev, qa, business, ai]
 ---
@@ -14,6 +14,27 @@ readers: [product, ui, dev, qa, business, ai]
 
 > Source alignment note: 本文件已按 converted-prd 做双向覆盖校验，补齐 Card Manage 证据缺口。
 
+> Code alignment note: 2026-05-29 按 AIX 前端代码 `src/data/card/manage/CardSetPinData.ts`、`CardSetPinRepo.ts` 补充 PIN 设置的运行时可确认事实。只写代码可直接证明的入口类型与加密上送链路；PIN 弱密码规则、Change PIN 独立接口仍以 converted-prd / DTC 为准。
+
+## 0.1 代码可确认的运行时事实补充（2026-05-29）
+
+### 0.1.1 PIN 入口类型（ToSetPinType）
+
+代码可确认 `ToSetPinType`：`ACTIVATE`、`SET_PIN`（区分「激活流程内设 PIN」与「卡管单独设 PIN」）。
+
+### 0.1.2 PIN 加密上送流程（两步，明文不出端）
+
+代码可确认（`CardSetPinRepo.ts`）PIN 不传明文：
+
+- 取公钥：`getPublicKey({ cardId })` → POST `Urls.cardSetPinGetPublicKey`，返回 `CardPublicKeyData { publicKey }`。
+- 设置：`setPin({ cardId, encryptedPin })` → POST `Urls.cardSetPin`。
+
+即前端用服务端公钥加密 PIN 得到 `encryptedPin` 再上送，**明文 PIN 不出端**。
+
+### 0.1.3 不从代码推导的内容
+
+- PIN 位数 / 弱 PIN 规则（如「同一数字出现超过 3 次被 DTC 拒绝」仍以 converted-prd / DTC 为准）。
+- 加密算法细节、Change PIN 是否走独立接口（本次代码仅见 get-public-key + set-pin 链路）。
 
 ## 1. 文档信息
 
