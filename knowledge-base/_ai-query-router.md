@@ -1,11 +1,11 @@
 ---
 module: knowledge-base
 feature: ai-query-router
-version: "2.3"
+version: "2.4"
 status: active
-source_doc: knowledge-base/_kb-ingestion-process.md；knowledge-base/_system-boundary.md；knowledge-base/changelog/knowledge-gaps.md；knowledge-base/wallet/_index.md；knowledge-base/home/_index.md；knowledge-base/card/_index.md；knowledge-base/transaction/_index.md；knowledge-base/kyc/_index.md；knowledge-base/security/_index.md；knowledge-base/common/_index.md；knowledge-base/kyc/account-opening.md；用户确认结论 2026-05-02；用户确认结论 2026-05-03；用户确认结论 2026-05-05
-source_section: runtime AI usage；query routing；fact source rules；fact ingestion；system boundary usage；ALL-GAP usage；Account Opening / KYC routing；cross-module dependency routing；repository directory rules
-last_updated: 2026-05-05
+source_doc: knowledge-base/_kb-ingestion-process.md；knowledge-base/_system-boundary.md；knowledge-base/changelog/knowledge-gaps.md；knowledge-base/wallet/_index.md；knowledge-base/home/_index.md；knowledge-base/card/_index.md；knowledge-base/transaction/_index.md；knowledge-base/kyc/_index.md；knowledge-base/security/_index.md；knowledge-base/common/_index.md；knowledge-base/common/cs-answer-cards.md；knowledge-base/_meta/ai-answer-policy.md；knowledge-base/kyc/account-opening.md；用户确认结论 2026-05-02；用户确认结论 2026-05-03；用户确认结论 2026-05-05；用户确认结论 2026-05-29
+source_section: runtime AI usage；query routing；fact source rules；fact ingestion；system boundary usage；ALL-GAP usage；Account Opening / KYC routing；cross-module dependency routing；customer-service answer routing；repository directory rules
+last_updated: 2026-05-29
 owner: 吴忆锋
 ---
 
@@ -71,6 +71,19 @@ AI 查询时，应先按用户问题定位主模块，但不得把跨模块问�
 
 禁止只读单一模块后直接得出跨系统结论。
 
+### 2.2 对客 / 客服 / Bot 回答路径
+
+面向终端用户回答（客服坐席或 Bot）时，在标准读取路径基础上**先读约束、再取答案**：
+
+```text
+1. _meta/ai-answer-policy.md      # 答复护栏、拒答、必转人工、PII / 风险披露（优先级最高）
+2. _meta/compliance-boundaries.md # 合规边界
+3. common/cs-answer-cards.md      # 已封装的对客答复指引
+4. 对应模块事实文件 + changelog/knowledge-gaps.md  # 核验事实、识别 deferred/open
+```
+
+硬规则：`ai-answer-policy` 与 `compliance-boundaries` 优先级高于答案卡与 FAQ；`deferred` / `open` 话题按策略转人工，不得作答；KB 无依据则按「未知」转人工 + 记 ALL-GAP，不猜。
+
 ## 3. 当前产品范围
 
 AIX 当前知识库覆盖：
@@ -125,7 +138,9 @@ AIX 当前知识库覆盖：
 | DTC 外部依赖 | `integrations/dtc/_index.md` | 对应业务事实文件、`knowledge-gaps.md`、`_system-boundary.md` | DTC 完整接口说明书 |
 | Notification / Push / 站内信 | `common/notification.md` | `wallet/deposit.md`、`card/transaction.md`、`kyc/account-opening.md`、`knowledge-gaps.md`、`_system-boundary.md` | 用业务流程文件替代通知文件 |
 | Errors / 错误处理 | `common/errors.md` | `integrations/walletconnect/_index.md`、`wallet/deposit.md`、`card/transaction.md`、`kyc/account-opening.md`、`knowledge-gaps.md` | 自行补错误码表 |
-| FAQ / 客服口径 | `common/faq.md` | 对应业务文件、`knowledge-gaps.md` | 自行扩写 FAQ |
+| FAQ / 客服口径 | `common/faq.md` | `common/cs-answer-cards.md`、`_meta/ai-answer-policy.md`、对应业务文件、`knowledge-gaps.md` | 自行扩写 FAQ |
+| 对客答复 / Bot 回答 / 客服话术 | `_meta/ai-answer-policy.md`、`common/cs-answer-cards.md` | `_meta/compliance-boundaries.md`、对应业务文件、`knowledge-gaps.md` | 把 deferred/open 写成事实；自行编造话术 / 升级规则 |
+| 拒答 / 必转人工 / 升级 | `_meta/ai-answer-policy.md` | `_meta/compliance-boundaries.md`、`knowledge-gaps.md` | 自定 SLA / 自创升级路径 |
 
 ## 6. ALL-GAP 使用规则
 
@@ -221,4 +236,7 @@ AI 使用本知识库时不得：
 - (Ref: knowledge-base/kyc/_index.md)
 - (Ref: knowledge-base/kyc/account-opening.md)
 - (Ref: knowledge-base/common/_index.md)
+- (Ref: knowledge-base/common/cs-answer-cards.md / 对客答复卡)
+- (Ref: knowledge-base/_meta/ai-answer-policy.md / 答复护栏与拒答策略)
 - (Ref: 用户确认结论 / 2026-05-02 / 知识库切换为使用态；AI 日常入口为 _ai-query-router.md；KYC 文件名不应带 wallet)
+- (Ref: 用户确认结论 / 2026-05-29 / 新增对客答案层与答复护栏)
