@@ -94,15 +94,15 @@ owner: 吴忆锋
 | ALL-GAP-067 | P1 | KYC / DTC / WalletAccount | `D-SUB-ACCOUNT-ID` 与 WalletAccount.clientId 的准确关系 | DTC 文档显示 `D-SUB-ACCOUNT-ID` 是 Sub Account Header，WalletAccount 有 `clientId` 字段；WalletConnect 文档中存在 client_id 语义，但不能写死两者完全等价 | 后端 / DTC | 影响接口请求上下文、字段引用和账户排障 | deferred |
 | ALL-GAP-068 | P1 | KYC / DTC / Account Opening | DTC Sub Account 创建时机与创建失败处理 | 未确认 KYC Approved 后是否立即创建 Sub Account，也未确认创建失败时 AIX 是否重试、告警、人工处理或限制用户能力 | 后端 / DTC / 运维 / 产品 | 影响开户闭环、异常处理和用户准入 | deferred |
 | ALL-GAP-069 | P1 | KYC / DTC / WalletAccount | WalletAccount.status 与 AIX 能力准入映射 | DTC WalletAccount 有 `status` 字段，但具体枚举、进入 / 退出条件、与 Wallet Balance / Deposit / WalletConnect / Receive 的准入映射未确认 | 后端 / DTC / 产品 | 影响 Wallet 页面、能力开关、错误提示和客服口径 | deferred |
-| ALL-GAP-070 | P0 | Card / Wallet / CS | 资金未入账（DTC transfer 成功但 Wallet 未入账）的对客客服 SOP | RESOLVED-012 / ALL-GAP-027 已确认系统无法自动发现、依赖用户反馈；但用户反馈后客服如何核实、补偿、回复用户的标准流程未沉淀 | 客服 / 运营 / 账务 / 后端 | 影响资金类投诉闭环和客服口径 | open |
-| ALL-GAP-071 | P0 | Wallet / Withdraw / CS | Withdraw 人工处理的客服 SOP | compliance-boundaries 已确认 App 隐藏 Withdraw 入口、提现走人工 CS 处理；但人工处理流程、所需材料、时效、限额、合规校验未沉淀 | 客服 / 合规 / 运营 / 后端 | 影响提现类咨询闭环 | open |
-| ALL-GAP-072 | P0 | Card / Dispute | 卡交易争议 / chargeback / 欺诈交易申诉流程 | 当前 KB 仅有 Lock/Unlock 与交易展示，无争议、拒付、未授权交易申诉的对客流程与时效 | 产品 / 客服 / DTC / 合规 | 影响争议处理闭环与监管要求 | open |
-| ALL-GAP-073 | P1 | Card / Lost-Stolen | 实体卡挂失 / 被盗 / 补卡（reissue）流程 | card/manage 已确认 Lock/Unlock(Freeze/Unfreeze)，但无挂失上报、永久注销、补卡流程与费用 | 产品 / 客服 / DTC | 影响卡安全事件闭环 | open |
-| ALL-GAP-074 | P1 | Common / CS | 客服分级 / 升级矩阵（severity / SLA / routing） | KB 多处出现「联系客服」「Lark 报警」，但无统一的客服分级、升级路径、SLA、责任分派矩阵 | 客服 / 运营 / 产品 | 影响异常闭环与响应时效 | open |
-| ALL-GAP-075 | P1 | Card / Wallet / Fees | 完整费用表 | limits-and-rules 仅确认 Virtual Card USD 5、Physical Card USD 10；FX 加价、ATM、跨境、不活跃、Swap 价差、Send 链上 gas 等费用项未系统确认 | 产品 / 账务 / DTC | 影响费用类咨询口径 | open |
-| ALL-GAP-076 | P1 | Common / Compliance | 支持的国家 / 地区 / 用户范围 / 币种 / network 权威清单 | 多模块出现支持范围相关 deferred（如 Receive ALL-GAP-061）；缺少全局权威的支持国家 / 用户 / 币种 / 链清单 | 产品 / 合规 / 后端 | 影响准入回答与合规边界 | open |
-| ALL-GAP-077 | P1 | Common / Errors / CS | 后端业务错误码 → 用户文案 → 客服补救动作字典 | ALL-GAP-038 / ALL-GAP-043 已记录错误码映射缺口；本条专指「客服补救动作（remediation）」层，即每个错误码客服该如何指导用户，尚无沉淀 | 客服 / 产品 / 后端 | 影响错误类咨询的可执行客服口径 | open |
-| ALL-GAP-078 | P0 | Account / CS | 当前 forgot-password / 重置密码的对客可用路径 | account/password-reset.md 与 common/errors.md 已确认「忘记密码」章节为删除线、不能作为 active runtime fact；但用户当前实际可用的重置 / 找回路径（是否走 CS、是否有临时方案）未确认 | 产品 / 客服 / 后端 | 影响最高频登录类咨询的客服口径 | open |
+| ALL-GAP-070 | P0 | Card / Wallet / CS | 资金未入账（DTC transfer 成功但 Wallet 未入账）的对客客服 SOP | RESOLVED-012 / ALL-GAP-027 已确认系统无法自动发现、依赖用户反馈；用户确认 2026-05-29：对客口径为联系客服处理；客服核实 / 补偿 / 回复用户的内部细则仍未沉淀 | 客服 / 运营 / 账务 / 后端 | 影响资金类投诉闭环和客服口径 | resolved-by-user |
+| ALL-GAP-071 | P0 | Wallet / Withdraw / CS | Withdraw 当前是否支持 | 用户确认 2026-05-29：Withdraw 当前暂不支持，后续开放；App 隐藏 Withdraw 入口（_meta/compliance-boundaries.md 已同步）。后续开放的流程 / 材料 / 时效 / 限额 / 合规校验待新 PRD | 客服 / 合规 / 运营 / 后端 | 影响提现类咨询口径 | resolved-by-user |
+| ALL-GAP-072 | P0 | Card / Dispute | 卡交易争议 / chargeback / 欺诈交易申诉流程 | 当前 KB 仅有 Lock/Unlock 与交易展示；用户确认 2026-05-29：对客口径为联系客服（邮件或电话）；争议受理流程、时效、与 DTC 的拒付链路仍未沉淀 | 产品 / 客服 / DTC / 合规 | 影响争议处理闭环与监管要求 | resolved-by-user |
+| ALL-GAP-073 | P1 | Card / Lost-Stolen | 实体卡挂失 / 被盗 / 补卡（reissue）流程 | card/manage 已确认 Lock/Unlock(Freeze/Unfreeze)；用户确认 2026-05-29：对客口径为联系客服（邮件或电话）；挂失上报、永久注销、补卡流程与费用仍未沉淀 | 产品 / 客服 / DTC | 影响卡安全事件闭环 | resolved-by-user |
+| ALL-GAP-074 | P1 | Common / CS | 客服分级 / 升级矩阵（severity / SLA / routing） | KB 多处出现「联系客服」「Lark 报警」，但无统一的客服分级、升级路径、SLA、责任分派矩阵；用户 2026-05-29 暂未明确，保持 open | 客服 / 运营 / 产品 | 影响异常闭环与响应时效 | open |
+| ALL-GAP-075 | P1 | Card / Wallet / Fees | 完整费用表 | limits-and-rules 仅确认 Virtual Card USD 5、Physical Card USD 10；FX 加价、ATM、跨境、不活跃、Swap 价差、Send 链上 gas 等费用项未系统确认；用户 2026-05-29：后补 | 产品 / 账务 / DTC | 影响费用类咨询口径 | deferred |
+| ALL-GAP-076 | P1 | Common / Compliance | 支持的国家 / 地区 / 用户范围 / 币种 / network 权威清单 | 用户确认 2026-05-29：支持国家 Philippines；链×稳定币：BASE=USDC、BSC=FDUSD/USDC/USDT、ETHEREUM=FDUSD/USDC/USDT/WUSD、SOLANA=FDUSD/USDC/USDT（已回填 _meta/countries-and-regions.md，与 wallet/assets CryptoMainNet/CryptoCurrency 枚举一致）；用户资格细节仍以 KYC 白名单为准 | 产品 / 合规 / 后端 | 影响准入回答与合规边界 | resolved-by-user |
+| ALL-GAP-077 | P1 | Common / Errors / CS | 后端业务错误码 → 用户文案 → 客服补救动作字典 | ALL-GAP-038 / ALL-GAP-043 已记录错误码映射缺口；本条专指「客服补救动作（remediation）」层；用户 2026-05-29：当前无此字典，后补 | 客服 / 产品 / 后端 | 影响错误类咨询的可执行客服口径 | deferred |
+| ALL-GAP-078 | P0 | Account / CS | 当前 forgot-password / 重置密码的对客可用路径 | 旧 PRD「忘记密码」章节为删除线；用户确认 2026-05-29：当前支持 Forgot Password，经 SMS OTP 验证后重置密码（对应代码 SetPwdRepo.initForgetPwd `{mobile, areaCode}` / setForgetPwd）；account/password-reset.md 已转 active。页面级 UX 细节仍待新 PRD | 产品 / 客服 / 后端 | 影响最高频登录类咨询的客服口径 | resolved-by-user |
 
 ## 3. 优先级定义
 
