@@ -1,11 +1,11 @@
 ---
 module: knowledge-base
 feature: runtime-readme
-version: "2.2"
+version: "2.3"
 status: active
-source_doc: knowledge-base/_ai-query-router.md；knowledge-base/_kb-ingestion-process.md；knowledge-base/_system-boundary.md；knowledge-base/changelog/knowledge-gaps.md；用户确认结论 2026-05-03；用户确认结论 2026-05-05
-source_section: runtime entry；fact ingestion；system boundary；ALL-GAP；repository directory rules
-last_updated: 2026-05-05
+source_doc: knowledge-base/_ai-query-router.md；knowledge-base/_kb-ingestion-process.md；knowledge-base/_kb-governance.md；knowledge-base/_system-boundary.md；knowledge-base/changelog/knowledge-gaps.md；knowledge-base/common/cs-answer-cards.md；knowledge-base/_meta/ai-answer-policy.md；用户确认结论 2026-05-03；用户确认结论 2026-05-05；用户确认结论 2026-05-29
+source_section: runtime entry；fact ingestion；KB governance；system boundary；ALL-GAP；customer-service answer layer；repository directory rules
+last_updated: 2026-05-29
 owner: 吴忆锋
 ---
 
@@ -21,8 +21,12 @@ It is not a build-phase plan, not a draft area, and not the place to maintain te
 |---|---|
 | AI daily query route | `_ai-query-router.md` |
 | Knowledge-base ingestion and fact writing process | `_kb-ingestion-process.md` |
+| Knowledge-base governance, freshness, ownership | `_kb-governance.md` |
 | System responsibility boundary | `_system-boundary.md` |
 | Global confirmation gap table | `changelog/knowledge-gaps.md` |
+| Customer-service answer layer (user-facing) | `common/cs-answer-cards.md` |
+| AI / CS answer guardrails and refusal policy | `_meta/ai-answer-policy.md` |
+| CS answer golden evaluation set | `_meta/cs-eval-set.md` |
 
 ## Usage rules
 
@@ -31,8 +35,10 @@ It is not a build-phase plan, not a draft area, and not the place to maintain te
 3. For AIX / DTC / AAI / KUN / WalletConnect responsibility questions, read `_system-boundary.md`.
 4. For unresolved or conflicting items, use `changelog/knowledge-gaps.md`.
 5. For converting PRDs, reference data, or external docs into confirmed facts, follow `_kb-ingestion-process.md`.
-6. Do not add module-level TODO, checklist, review notes, correction plans, local gap tables, or implementation logs.
-7. Do not treat README files as business fact sources.
+6. For answering end users, read `_meta/ai-answer-policy.md` (guardrails) before `common/cs-answer-cards.md` (answers); never present `deferred` / `open` items as fact.
+7. For KB freshness, ownership, change-sync, and release gating, follow `_kb-governance.md`.
+8. Do not add module-level TODO, checklist, review notes, correction plans, local gap tables, or implementation logs.
+9. Do not treat README files as business fact sources.
 
 ## Current module directories
 
