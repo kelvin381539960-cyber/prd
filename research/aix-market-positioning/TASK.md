@@ -34,11 +34,16 @@ Step 1 已于 2026-08-29 经 **Advance Codex CLI → ARouter → grok-4.6 → xh
 
 ### Step 2 验收
 
-Step 2 已于 2026-08-29 经 **6 路 GLM xhigh 采集 + GPT-5.6 Sol 独立评审**：
-- Round 1：FAIL，要求修正品牌出身偏差、Account vs Card 区分、live/future 纪律、Region 映射和 AIX Unknown 处理。
-- 补证后 Round 2：PASS。
+Step 2 先经 **6 路 GLM xhigh 采集 + GPT-5.6 Sol 独立评审**完成第一轮收口；随后按项目要求追加 **Advance Codex CLI → ARouter → grok-4.6 → xhigh** 终审。
 
-评审记录：`reviews/02-gpt56-review.md`
+Grok 4.6 xhigh：
+- Round 1：**FAIL**。结构性问题：X 轴混入 Account Role；cell=物种与 S6 跨 cell 冲突；AIX `S1↔S3 / S1→S3` 超出现有事实。
+- 修正后：X 改为实际消费价值容器；Money Account 改为 overlay；cell 改为 occupancy map；AIX current 仅保留 `X1 confirmed / Y Unknown / Species Unknown`。
+- Round 2：**FAIL**。4 项收口问题：Plasma One live 状态、Bitget X1/S1 过度落位、直接竞品条件存在“或”、KAST current SWIFT/Fedwire 证据未同步。
+- 再修正：Plasma One 改 current live；Bitget 改 `Y=A confirmed / X=Unknown / S1 candidate`；直接竞品改四项 AND；KAST 同步 Unified Balance + ACH/SWIFT/Fedwire + receive/send/spend。
+- Final re-review：**PASS**（Job `job_01M16YFZR1C0VZMAE7YBTM2RRS`），无新增 P0/P1。
+
+评审记录：`reviews/02-gpt56-review.md`、`reviews/02-grok46-review.md`。
 证据索引：`evidence/02-sources.md`
 
 ## 后续维护规则

@@ -26,8 +26,8 @@
 ### 4. KAST Global Accounts
 
 - URL：https://www.kast.xyz/global-accounts
-- 支持点：Global USD Account / Unified Balance / receive-send-spend。
-- 限制：SWIFT 若页面标 Coming Soon 则为 **future**，不能当 live。
+- 支持点：current Global USD/EU Account、Unified Balance、ACH / SWIFT / Fedwire、receive / send / spend。
+- 限制：本轮 2026-08-29 current 页面已明确 SWIFT 为现有资金通道之一；后续若页面变化，按最新 current evidence 更新，不沿用旧版 Coming Soon 口径。
 
 ### 5. KAST K Card vs Solana Card
 
@@ -38,8 +38,8 @@
 ### 6. Bitget Wallet Card
 
 - URL：https://web3.bitget.com/card
-- 支持点：current Card Top-Up、countries、Visa/Mastercard、fees。
-- 限制：产品页；具体 eligibility 以帮助页为准。
+- 支持点：current 官方明确 `Activate → top up → spend`、可用 crypto top-up、countries、Visa/Mastercard、fees。
+- 限制：产品页；具体 eligibility 以帮助页为准。`top up` 本身不足以证明存在独立 Dedicated Spend/Card Balance，因此当前只确认 Y=A，不确认 X1。
 
 ### 7. Bitget Help Center 425
 
@@ -93,8 +93,8 @@
 ### 15. Plasma One
 
 - URL：https://www.plasma.to/one/
-- 支持点：stablecoin balance direct spend / self-custody / early access 提示。
-- 限制：early-access / scaling status 需标注，不能当全量 live。
+- 支持点：current live；官方明确 self-custody、stablecoin balance backing card、global account services、send / receive / spend。
+- 限制：当前按 live 产品处理；具体 region eligibility、partner rail 与各市场可用能力仍需按 current 页面逐区验证。
 
 ### 16. Plasma Insights: Licensing
 
