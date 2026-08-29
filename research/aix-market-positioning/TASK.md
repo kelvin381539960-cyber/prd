@@ -20,7 +20,7 @@
 | Step 1 | 市场大盘 + 用户 Jobs | ✅ Completed | `01-market-overview-and-user-jobs.md` |
 | Step 2 | 生态位地图：Solution Axes + 玩家落位方法 | ✅ Completed | [`02-ecosystem-map.md`](02-ecosystem-map.md) |
 | Step 3 | 重点玩家定位与核心用户研究 | ✅ Completed | [`03-player-positioning.md`](03-player-positioning.md) |
-| Step 4 | AIX 竞争重合关系：直接 / 相邻 / 替代 / 潜在 | ⏳ Pending | `04-competition-map.md` |
+| Step 4 | 市场竞争结构：直接 / 相邻 / Rail 替代 / 潜在 | ✅ Completed | [`04-competition-map.md`](04-competition-map.md) |
 | Step 5 | AIX 当前生态位、目标生态位与市场白地 | ⏳ Pending | `05-aix-positioning.md` |
 | Final | 综合市场地图与管理层结论 | ⏳ Pending | `final-market-positioning.md` |
 
@@ -58,6 +58,23 @@ Step 3 按既定流程完成 **多路 GLM-5.3-Flash 证据采集 → GPT-5.6 Sol
 
 评审记录：`reviews/03-grok46-review.md`。
 证据索引：`evidence/03-sources.md`。
+
+
+### Step 4 验收
+
+Step 4 按修正后的市场级方法完成：**多路证据采集 → GPT-5.6 Sol 主审/收口 → Advance Codex CLI → ARouter → grok-4.6 → xhigh 独立终审**。
+
+关键验收结果：
+- 市场边界保持为 **`consumer crypto/stablecoin → real-world purchasing power`**；不以 AIX 当前地区、资产、Card Balance、功能或架构定义市场。
+- Confirmed Direct 固定为四项 AND：**same current market/region + same core Job + overlapping starting money pool + substitutable real-world purchasing-power outcome**。
+- Direct **不要求** same X / Y / custody / rail；这些只作为差异化变量。
+- 市场拆为 **J1 Global Money / J2 Crypto → Spend / J3 Keep Crypto → Liquidity** 三个 Job 战场，并把 Card、QR、Bank/E-wallet、Gift/Prepaid、Merchant-direct、P2P 作为 Spend Rail 层处理。
+- PH stablecoin-starting J2 card segment 中，**RedotPay / Bitget Wallet Card / ether.fi Direct Pay** 通过用户层 four-AND，可形成 player-to-player Confirmed Direct set。
+- KAST 保留 Money Account 强证据，同时保留 current mechanism Source Conflict：**`X2 confirmed / Y Unknown / Strategy Cluster Unknown`**。
+- Grok-4.6 xhigh final review：**PASS，0 个 P0/P1**（Job `job_01M17BHP99XK9W2T1MT4M4VF9Z`）。
+
+评审记录：`reviews/04-gpt56-review.md`、`reviews/04-grok46-review.md`。
+证据索引：`evidence/04-sources.md`。
 
 ## 后续维护规则
 每完成一个 Step：
