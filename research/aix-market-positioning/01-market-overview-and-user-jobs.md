@@ -36,7 +36,7 @@
 
 ### 必须分列的 Paymentscan 口径
 
-- Paymentscan 另有约 **$1.038B headline**（含非 card 或更宽口径）与约 **$642M pure-on-chain view**，引用时必须分列，不得混用。
+- Paymentscan 另有约 **$1.038B headline** 与约 **$642M pure-on-chain view**；它们与 $759M 快照存在统计口径和/或时间点差异，具体差异需以对应 Paymentscan 原始页面定义为准，引用时必须分列，不得混用。
 
 ### 不进入总盘的品牌数据
 
