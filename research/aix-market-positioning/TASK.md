@@ -18,7 +18,7 @@
 | 阶段 | 内容 | 状态 | 产物 |
 |---|---|---|---|
 | Step 1 | 市场大盘 + 用户 Jobs | ✅ Completed | `01-market-overview-and-user-jobs.md` |
-| Step 2 | 生态位地图：Solution Axes + 玩家落位方法 | ⏳ Pending | `02-ecosystem-map.md` |
+| Step 2 | 生态位地图：Solution Axes + 玩家落位方法 | ✅ Completed | [`02-ecosystem-map.md`](02-ecosystem-map.md) |
 | Step 3 | 重点玩家定位与核心用户研究 | ⏳ Pending | `03-player-positioning.md` |
 | Step 4 | AIX 竞争重合关系：直接 / 相邻 / 替代 / 潜在 | ⏳ Pending | `04-competition-map.md` |
 | Step 5 | AIX 当前生态位、目标生态位与市场白地 | ⏳ Pending | `05-aix-positioning.md` |
@@ -31,6 +31,15 @@ Step 1 已于 2026-08-29 经 **Advance Codex CLI → ARouter → grok-4.6 → xh
 
 评审记录：`reviews/01-grok46-review.md`
 证据索引：`evidence/01-sources.md`
+
+### Step 2 验收
+
+Step 2 已于 2026-08-29 经 **6 路 GLM xhigh 采集 + GPT-5.6 Sol 独立评审**：
+- Round 1：FAIL，要求修正品牌出身偏差、Account vs Card 区分、live/future 纪律、Region 映射和 AIX Unknown 处理。
+- 补证后 Round 2：PASS。
+
+评审记录：`reviews/02-gpt56-review.md`
+证据索引：`evidence/02-sources.md`
 
 ## 后续维护规则
 每完成一个 Step：
