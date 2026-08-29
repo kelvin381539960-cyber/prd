@@ -15,6 +15,7 @@ This repository is used to maintain structured, source-based product facts, new 
 | `external-docs/` | Original external dependency documents such as DTC documents |
 | `archive/` | Historical or deprecated source materials, including historical PRDs |
 | `tools/` | Helper scripts for maintaining this repository |
+| `research/` | Structured market, competitor, and product-positioning research artifacts |
 
 ## Runtime entry points
 
