@@ -6,6 +6,62 @@
 - **核心目标**：建立 AIX 所处的 Crypto / Stablecoin 现实购买力市场底图，识别真实用户 Jobs、生态位、竞争关系与 AIX 应占据的位置。
 - **重点竞品样本**：RedotPay；其他玩家按市场证据纳入，不预设名单。
 
+## 执行层级与 Scope Guardrails（强制）
+
+本节是本研究后续执行的硬护栏，只约束任务范围，不修改既有市场结论、证据分级或已完成阶段产物。
+
+### 1. 当前主任务层级
+
+当前主任务层级固定为：**Business Strategy + Product Strategy + Strategic Roadmap + Key Assumption Validation**。
+
+默认允许输出：
+
+- 市场选择、用户 Job、竞争格局；
+- 战略定位、业务模式、产品形态、能力组合；
+- 阶段目标、Roadmap、进入/退出条件；
+- 关键假设、验证指标、Current → Target Gap、优先级与依赖。
+
+### 2. 默认禁止下钻
+
+默认禁止把研究下钻为以下页面/产品设计/实现层内容：**页面结构、具体 UI、CTA/文案、字段/API 映射、状态机、异常文案、PRD 章节、原型、技术实现细节**。只有用户明确要求“进入具体设计/PRD/页面/接口”时，才允许切换到对应层级；切换后仍须明确新的 scope。
+
+实现、代码或 Vendor 事实，只能用于回答战略决策所需的 **feasibility / constraint / gap**。发现实现细节，不得自动把任务切成产品设计或 PRD。
+
+### 3. 每个新 Phase 的 Scope Check
+
+每次开始新 Phase（包括以 Step 命名的阶段）前，执行 Agent 必须先回答：
+
+1. 本阶段要回答的战略问题是什么？
+2. 当前分析和预期输出是否仍处于战略层？
+
+如果分析内容开始回答“页面怎么做、字段怎么写、接口怎么接”，必须立即停止该分析分支，回到本阶段的战略问题，并将问题重写为能力、约束、Gap 或验证问题。未完成 Scope Check，不得开始该 Phase 的证据采集或结论撰写。
+
+### 4. Agent 分工同样受护栏约束
+
+- **执行 Agent**：只收集与当前战略问题直接相关的证据；不得主动产出页面方案、交互方案、字段/API 方案或 PRD。
+- **Reviewer**：除事实、推理和证据质量外，必须检查 scope drift；一旦发现下钻，先退回战略问题，不能以页面/PRD 产出替代研究结论。
+- **所有 Agent**：不得因看到实现、代码或 Vendor 细节，就自行扩大任务层级。
+
+### 5. Roadmap 的默认单位与当前逻辑
+
+Roadmap 阶段的默认单位是**业务能力、用户关系、产品形态、市场验证**，不是 feature list。
+
+当前 Roadmap 逻辑固定为：
+
+> **Current → Phase 1 One Money Relationship → Phase 2 Multi-rail Everyday Spend → Phase 3 Everyday Money Account**
+
+其中：
+
+- **A6** 是 GTM wedge；
+- **A3** 是 product form；
+- **A1** 是 target user/account role。
+
+三者是分层、递进的 staged path，不得写成三个并行产品或三个并行战略。
+
+### 6. Stop Rule
+
+若任务内容出现连续两个以上页面/交互/字段/接口级决策，而用户没有明确要求下钻，即视为 **scope drift**。必须立即停止，删除/搁置该下钻分支，并回到当前战略问题；不得继续累积为研究产物。
+
 ## 研究原则
 1. 先研究市场与用户，再研究品牌；不从竞品功能表倒推市场。
 2. 每个阶段必须形成独立结论文档，并保留证据索引与关键评审记录。
