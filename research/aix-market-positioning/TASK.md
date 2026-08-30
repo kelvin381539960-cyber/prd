@@ -141,6 +141,7 @@ Roadmap 阶段的默认单位是**业务能力、用户关系、产品形态、�
 | Final | 综合市场地图与管理层结论 | ✅ Completed | `final-market-positioning.md` |
 | Strategic Validation v1 | Business Strategy + Product Strategy + Key Assumption Validation | ✅ Completed | [`07-strategic-validation.md`](07-strategic-validation.md) |
 | Strategic Validation Update 08 | P1 evidence upgrade + P2/J1 discovery refinement | ✅ Completed | [`08-strategic-validation-update.md`](08-strategic-validation-update.md) |
+| Strategic Validation P1 Gate Closure 09 | P1 temporal-persistence validation and direct fund-retention evidence boundary | ✅ Completed | [`09-p1-gate-closure.md`](09-p1-gate-closure.md) |
 
 ## 当前阶段验收
 Step 1 已于 2026-08-29 经 **Advance Codex CLI → ARouter → grok-4.6 → xhigh** 两轮严格评审：
@@ -239,7 +240,31 @@ Roadmap 与阶段顺序不变：**Current → P1 → P2 → P3**；继续 **Gate
 
 证据：[`08-strategic-validation-update.md`](08-strategic-validation-update.md)、[`evidence/08-sources.md`](evidence/08-sources.md)。评审：[`reviews/08-achatgpt56sol-review.md`](reviews/08-achatgpt56sol-review.md)。
 
+### Strategic Validation P1 Gate Closure 09 验收
+
+本阶段已完成结论与证据索引的物化，并经 **AChatGPT GPT-5.6 Sol/high CLEAN PASS** 独立验收（Job `job_01M19MB53DW9DJJ8XP6BTS475Q`；**P0=0、P1=0、P2=0、FINDINGS=NONE、P1_GATE=`NOT_YET_PASS`、P1_EVIDENCE=`REPEAT_PROVEN / TEMPORAL_PROXY_POSITIVE / DIRECT_RETENTION_UNPROVEN`、ROADMAP=`UNCHANGED`、SCOPE=`PASS`**）。`Gate Closure` 表示证据阶段收口，不等于 P1 acceptance。Reason: All counts, evidence boundaries, claim classifications, roadmap constraints, scope guardrails, and Gate-stage distinction are consistent。
+
+关键验收结果：
+- **P1 One Money Relationship** 保持 `NOT_YET_PASS — positive repeat-relationship signal proven; linked fund-retention evidence gap`；重复关系已证实，时间持久性 proxy 为正向，但 direct linked historical fund-retention 仍未证实。
+- 成功 card TOP_UP 聚合为 198 笔 / 23 用户，显式 `test_user_info` contamination 为 0；captured Purchase 聚合为 166 笔 / 22 用户。
+- Retention-proxy A 与 B 均提供正向时间关系信号，但不证明后续 card TOP_UP 由更早的 wallet Deposit 供资，也不证明同一笔资金持续留在 AIX。
+- `WalletPO` 无 balance field；实时 wallet snapshot、未实际使用的 wallet-history DTO、placeholder activity enum，以及 card-side `transaction_balance_record` 均不足以构成 direct wallet historical fund-retention source。
+- **P2 scale 继续被阻断**；Roadmap 顺序不变；Discovery 可继续并行；不新增任何数值 Gate threshold。
+- 最小下一证据状态为 `Unknown / downstream validation required`：需要与 repeat active use 关联的 non-PII historical balance/ledger-derived holding-duration aggregate，以区分 retained funds 与 just-in-time funding。本阶段不设计其 schema、instrumentation、API 或实现。
+
+阶段边界：本阶段只完成 Strategy + Capability Level 的证据收口，不新增 Capability，不输出 feature、PRD、page、API、state-machine 或实现方案。
+
+证据索引：[`evidence/09-sources.md`](evidence/09-sources.md)。评审：[`reviews/09-achatgpt56sol-review.md`](reviews/09-achatgpt56sol-review.md)。
+
 ## 下一位主控接手协议
+
+### 当前 handoff：P1 Gate Closure 09 之后
+
+- 当前战略问题：时间关系 proxy 是否足以关闭 P1 的 direct linked historical fund-retention evidence gap？当前答案是：**不足，P1 仍为 `NOT_YET_PASS`**。
+- 本轮只允许判断 One Money Relationship 的证据充分性、Capability-level 关系判断、P1/P2 阶段依赖与 Roadmap Gate 影响；不要把 proxy 计数改写成 Gate threshold。
+- 最小下一证据为 non-PII linked historical balance/ledger-derived holding-duration aggregate tied to repeat active use；当前状态是 `Unknown / downstream validation required`。
+- **Hardened Capability-level guardrail：** 后续工作必须停留在 Strategy + Capability Level；不得下钻到页面/UI/CTA/文案、字段/API mapping、状态机、异常流程、schema/instrumentation、PRD 需求或实现设计。若 Capability-level 证据仍不足，记录 `Unknown / downstream validation required` 后停止。
+- P2 scale 仍被 P1 Gate 阻断；Roadmap 仍为 `Current → P1 → P2 → P3`，Discovery 可并行。
 
 接手本任务时，先执行以下检查，再做任何研究：
 1. 用一句话复述当前战略问题；
