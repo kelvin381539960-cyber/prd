@@ -93,12 +93,10 @@ This is a capability-level strategy overlay. Current AIX capability does not def
 
 **P1 Gate.** Proceed only when evidence shows both:
 
-- funds are retained in the relationship; and
+- funds are retained alongside an active-relationship signal (repeat active use, renewed inflow, or actual spend); and
 - users return for repeat purchasing-power use.
 
-The gate is behavioral and relationship-based. It is not a completeness checklist for an account.
-
-Funds retention is valid evidence only when paired with repeated voluntary use or renewed inflow/spend behavior; a balance that remains because exit capability is absent or constrained must not be counted as positive retention.
+The gate is behavioral and relationship-based. It is not a completeness checklist for an account. Balance persistence alone may be trapped balance while Send/Withdraw runtime is unconfirmed; it does not constitute evidence that the P1 Gate has passed.
 
 ### Kill
 
@@ -216,7 +214,7 @@ These are deliberately deferred options, not hidden Phase 1–3 requirements.
 
 | Validation layer | Metric categories |
 |---|---|
-| P1 relationship | Funds retention, repeat purchasing-power use, return/recurrence behavior, continuity of the money relationship |
+| P1 relationship | Funds retained alongside repeat active use, renewed inflow, or actual spend; return/recurrence behavior; continuity of the money relationship |
 | P2 rail and market | Incremental frequency, incremental scenarios, local-rail use, complementarity with existing spend, partner readiness, economics, compliance viability |
 | P3 account role | Recurring inflow, Receive/Hold/Send/Spend relationship, primary-account behavior, relationship depth and continued reliance |
 | Cross-phase | User retention, purchasing-power usefulness, failure reasons, evidence strength, and cost or constraint signals |
@@ -228,7 +226,7 @@ No metric category should be converted into a fabricated numerical gate in v1.
 | Item | Classification | Boundary |
 |---|---|---|
 | Whether J1 is a sufficiently large or urgent primary job | **Unknown / target hypothesis** | J1 primary is a strategic choice to validate, not a proven market fact |
-| Whether users will retain funds and return for repeat purchasing power | **Unknown** | P1 must establish this behavior before broader scale-up |
+| Whether retained funds reflect an active money relationship rather than trapped balance | **Unknown** | With Send/Withdraw runtime unconfirmed, assess retained funds alongside repeat active use, renewed inflow, or actual spend; balance persistence alone is insufficient evidence for P1 |
 | Whether PH is the right proof market in practice | **Unknown / candidate** | Current evidence supports PH as best-supported candidate only; it is not a confirmed blue ocean or global optimum |
 | Which local rail adds real increment | **Unknown** | Rail selection follows observed frequency or scenario contribution |
 | Partner, compliance, and economics viability | **Unknown** | These are P2 gate conditions, not assumed enablers |
