@@ -142,6 +142,7 @@ Roadmap 阶段的默认单位是**业务能力、用户关系、产品形态、�
 | Strategic Validation v1 | Business Strategy + Product Strategy + Key Assumption Validation | ✅ Completed | [`07-strategic-validation.md`](07-strategic-validation.md) |
 | Strategic Validation Update 08 | P1 evidence upgrade + P2/J1 discovery refinement | ✅ Completed | [`08-strategic-validation-update.md`](08-strategic-validation-update.md) |
 | Strategic Validation P1 Gate Closure 09 | P1 temporal-persistence validation and direct fund-retention evidence boundary | ✅ Completed | [`09-p1-gate-closure.md`](09-p1-gate-closure.md) |
+| Strategic Validation 10 | QR Ph named partner + operating model + economics discovery | ✅ Completed | [`10-qrph-partner-operating-model.md`](10-qrph-partner-operating-model.md) |
 
 ## 当前阶段验收
 Step 1 已于 2026-08-29 经 **Advance Codex CLI → ARouter → grok-4.6 → xhigh** 两轮严格评审：
@@ -256,13 +257,29 @@ Roadmap 与阶段顺序不变：**Current → P1 → P2 → P3**；继续 **Gate
 
 证据索引：[`evidence/09-sources.md`](evidence/09-sources.md)。评审：[`reviews/09-achatgpt56sol-review.md`](reviews/09-achatgpt56sol-review.md)。
 
+### Strategic Validation 10：QR Ph Partner Operating Model & Economics Discovery
+
+本阶段已完成 **Strategy + Capability Level 的物化**，并经 **AChatGPT GPT-5.6 Sol / high CLEAN PASS** 独立验收（Review job `job_01M19NENC9PCFW2M9X6Z91SJ66`；**VERDICT=PASS、P0=0、P1=0、P2=0、FINDINGS=NONE、QR_DISCOVERY=KEEP、PRIMARY_PARTNER_CANDIDATE=NETBANK、PARTNER_STATUS=DISCOVERY_CANDIDATE_NOT_APPROVED、OPERATING_MODEL=PARTNER_LED_POOLED_SETTLEMENT_PROPOSAL、ECONOMICS=UNKNOWN_COMMERCIAL_QUOTE_REQUIRED、FULL_STABLECOIN_TO_QRPH_PATH=UNKNOWN、AIX_REGULATORY_ROLE=UNKNOWN、P2_SCALE=BLOCKED_BY_P1、ROADMAP=UNCHANGED、SCOPE=PASS**）。Reason: All 16 evidence, classification, roadmap, and capability-scope guardrails pass。Netbank remains a discovery candidate, not an approved or selected vendor；pooled settlement remains Proposal。本阶段不等于 build authorization、partner approval 或 P2 scale acceptance。
+
+关键决策：
+- QR Ph P2M 从 generic `Priority Discovery Rail` 升级为 **`Netbank-led payer-side discovery path / KEEP`**；Netbank 为 **Tier-1 discovery candidate**，Maya / PayMongo 为 Tier-2 backup。
+- Netbank 的 Tier-1 结论仅基于公开证据组合：QR Ph Sender/Receiver 角色、payer-side QRPh 能力证据、BaaS Settlement Account 模型和 international payment company 支持；不代表 partner willingness 或已批准商业条款。
+- 首先验证 **partner-led pooled settlement** Proposal；per-user Netbank Account-as-a-Service / white-label account 仅作为 fallback；direct AIX OPS / merchant-acquisition route 不作为下一步 discovery。
+- Economics 为 **`Unknown / commercial quote required`**；PHP10 generic disbursement 和 1.0–1.4% merchant-acceptance pricing 仅为 benchmark，不是 AIX payer-side cost，也不新增 pass threshold。
+- BSP OPS 边界意味着 partner-led integration 不会自动消除 AIX 监管义务；AIX exact role/classification、stablecoin→PHP→QRPh 完整路径、责任拆分与 partner terms 仍为 Unknown。
+
+Roadmap 影响：P2 discovery 更具体，但 **P2 scale 仍被 P1 Gate 阻断**；Roadmap 仍为 `Current → P1 → P2 → P3`，不改变 Gate Serial / Discovery Parallel。
+
+证据索引：[`evidence/10-sources.md`](evidence/10-sources.md)。评审：[`reviews/10-achatgpt56sol-review.md`](reviews/10-achatgpt56sol-review.md)。
+
 ## 下一位主控接手协议
 
-### 当前 handoff：P1 Gate Closure 09 之后
+### 当前 handoff：QR Ph Partner Operating Model 10 之后
 
-- 当前战略问题：时间关系 proxy 是否足以关闭 P1 的 direct linked historical fund-retention evidence gap？当前答案是：**不足，P1 仍为 `NOT_YET_PASS`**。
-- 本轮只允许判断 One Money Relationship 的证据充分性、Capability-level 关系判断、P1/P2 阶段依赖与 Roadmap Gate 影响；不要把 proxy 计数改写成 Gate threshold。
-- 最小下一证据为 non-PII linked historical balance/ledger-derived holding-duration aggregate tied to repeat active use；当前状态是 `Unknown / downstream validation required`。
+- 当前战略问题：Netbank-led payer-side QR Ph P2M discovery path 是否能在保留 stablecoin / One Money Relationship 的前提下，满足 partner-led operating model、监管边界与 low-ticket everyday-spend economics 的 Capability-level 验证要求？当前答案是：**Discovery KEEP；partner terms、AIX role、完整 funding path 与 economics 仍为 Unknown**。
+- 本轮只允许判断 named partner fit、pooled settlement vs per-user account 的战略优先级、稳定币→PHP funding/FX、责任/监管边界、商业经济性与 P1/P2 阶段依赖；不得把公开 benchmark 改写成 AIX actual cost 或 pass threshold。
+- 首先验证 partner-led pooled settlement Proposal；per-user Netbank Account-as-a-Service / white-label account 仅作 fallback；direct AIX OPS / merchant-acquisition route 暂不作为下一步 discovery。
+- 后续需要确认 payer-side QRPh P2M eligibility、pooled Settlement Account permissibility、stablecoin→PHP/FX path、all-in costs/minimums/commitments、regulatory/KYC/AML/consumer-protection split，以及 settlement/refund/reversal 的高层 feasibility boundary。
 - **Hardened Capability-level guardrail：** 后续工作必须停留在 Strategy + Capability Level；不得下钻到页面/UI/CTA/文案、字段/API mapping、状态机、异常流程、schema/instrumentation、PRD 需求或实现设计。若 Capability-level 证据仍不足，记录 `Unknown / downstream validation required` 后停止。
 - P2 scale 仍被 P1 Gate 阻断；Roadmap 仍为 `Current → P1 → P2 → P3`，Discovery 可并行。
 
