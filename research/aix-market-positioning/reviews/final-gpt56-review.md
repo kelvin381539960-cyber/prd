@@ -5,7 +5,7 @@
 
 ## 1. Review scope
 
-本记录核验 [`final-market-positioning.md`](../final-market-positioning.md) 与 [`final-sources.md`](../evidence/final-sources.md) 是否忠实 materialize 已评审 Step 1–5 和 Final Agent A 的主综合决策。它不重新研究、不新增来源，也不替代独立 Grok Final review。
+本记录核验 [`final-market-positioning.md`](../final-market-positioning.md) 与 [`final-sources.md`](../evidence/final-sources.md) 是否忠实 materialize 已评审 Step 1–5 和 Final Agent A 的主综合决策。它不重新研究、不新增来源；独立 Final gate 已由用户指定的 AChatGPT GPT-5.6 Sol/high 完成。
 
 ## 2. Main consistency checks
 
@@ -27,8 +27,8 @@
 
 ## 4. Independent final gate
 
-**Independent Grok final review is still required.** 当前 ARouter quota 返回 `403 account balance depleted`，因此独立 Final review 尚未完成。Step 5 的 Grok PASS 只适用于 Step 5，不等于本次 Final synthesis 的独立终审。
+历史 Grok gate 因 quota 403 未执行；按用户指令改由 AChatGPT GPT-5.6 Sol/high 独立终审。
 
-Final quota smoke job `job_01M191234VA9NSS6Q63DJE9ZMP` 使用 route `Advance Codex CLI → ARouter → grok-4.6 → xhigh`，结果为 **FAILED before review**：`403 account balance depleted`。该 smoke 未产生任何 review evidence，Final 独立 Grok review 仍为 **Pending**。
+Job `job_01M1920GME3G4QE0FHKFR00HPR`，结果为 **PASS / 0 个 P0/P1**。Final gate satisfied。详见 [`final-achatgpt56sol-review.md`](final-achatgpt56sol-review.md)。
 
-**不得声称 Grok Final PASS；当前独立终审状态为 Pending / unavailable due to ARouter quota。**
+Final quota smoke job `job_01M191234VA9NSS6Q63DJE9ZMP` 使用 route `Advance Codex CLI → ARouter → grok-4.6 → xhigh`，结果为 **FAILED before review**：`403 account balance depleted`。该 smoke 未产生任何 review evidence；不得声称 Grok Final PASS，历史 Grok gate 未执行。

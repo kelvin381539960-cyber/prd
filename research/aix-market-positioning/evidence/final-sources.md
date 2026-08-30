@@ -1,6 +1,6 @@
 # Final｜Sources and evidence index
 
-> **Status: Final index / main synthesis pending independent final review.**
+> **Status: Final index / Reviewed — AChatGPT GPT-5.6 Sol / high 独立终审 PASS，0 个 P0/P1。**
 > **Final adds no new external facts.** 本文件只登记 Final 综合采用的既有输入、执行结果与证据纪律，不重新汇编底层证据，也不新增 URL。
 
 ## 1. Adopted inputs
@@ -41,7 +41,14 @@ ARouter B/C/D 未形成可评审 artifact；其 partial streams 不进入 Final 
 
 ### Final Grok quota smoke
 
-- Job `job_01M191234VA9NSS6Q63DJE9ZMP`，route `Advance Codex CLI → ARouter → grok-4.6 → xhigh`：**FAILED before review**，返回 `403 account balance depleted`。该 smoke 未产生任何 review evidence，Final 独立 Grok review 仍为 **Pending**。
+- Job `job_01M191234VA9NSS6Q63DJE9ZMP`，route `Advance Codex CLI → ARouter → grok-4.6 → xhigh`：**FAILED before review**，返回 `403 account balance depleted`。该 smoke 未产生任何 review evidence；当时 Final 独立 Grok review 仍为 **Pending**。
+
+### Independent Final Gate Replacement
+
+- 用户指定以 AChatGPT GPT-5.6 Sol/high 替代历史 Grok final gate。
+- Job `job_01M1920GME3G4QE0FHKFR00HPR`。
+- 结果：**PASS / 0 个 P0/P1**。
+- 该 review 成为 Final 独立终审证据，Final gate satisfied。详见 [`final-achatgpt56sol-review.md`](../reviews/final-achatgpt56sol-review.md)。
 
 ## 3. Core evidence disciplines preserved
 
