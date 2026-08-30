@@ -81,6 +81,7 @@ Roadmap 阶段的默认单位是**业务能力、用户关系、产品形态、�
 | Roadmap v1 | Business + Product Strategic Roadmap | ✅ Completed | `06-strategic-roadmap.md` |
 | Final | 综合市场地图与管理层结论 | ✅ Completed | `final-market-positioning.md` |
 | Strategic Validation v1 | Business Strategy + Product Strategy + Key Assumption Validation | ✅ Completed | [`07-strategic-validation.md`](07-strategic-validation.md) |
+| Strategic Validation Update 08 | P1 evidence upgrade + P2/J1 discovery refinement | ✅ Completed | [`08-strategic-validation-update.md`](08-strategic-validation-update.md) |
 
 ## 当前阶段验收
 Step 1 已于 2026-08-29 经 **Advance Codex CLI → ARouter → grok-4.6 → xhigh** 两轮严格评审：
@@ -165,6 +166,19 @@ Roadmap 阶段顺序不变：**Current → P1 → P2 → P3**；正式执行方�
 
 评审记录：`reviews/07-achatgpt56sol-review.md`。
 证据索引：`evidence/07-sources.md`。
+
+### Strategic Validation Update 08 验收
+
+Update 08 已经 **AChatGPT GPT-5.6 Sol/high：CLEAN PASS**（Job `job_01M19GTX3XF7R0NQP811XTW5S6`），**P0=0、P1=0、P2=0**，结论为 **STRATEGIC_UPDATE ACCEPT**。
+
+当前状态：
+- **P1 One Money Relationship**：`NOT_YET_PASS — positive repeat-relationship signal proven; linked fund-retention evidence gap`。重复入金/重复消费/renewed inflow/跨期及完整循环已有生产聚合正向证据，但尚未证明资金在 AIX 内形成留存关系；P2 scale 继续被 Gate 阻断。
+- **P2 QR Ph P2M**：继续 **Priority Discovery Rail / KEEP**；需补 named partner、经济性、运营角色与真实增量使用证据，不构成 build 授权或 moat。
+- **P3 / J1 Remittance**：继续 **Primary J1 Discovery Wedge / KEEP**；SG→PH 仅作为 primary ASEAN discovery sample，MY→PH 为 comparator，US/Saudi 为 scale benchmarks，global first corridor 仍为 Unknown。
+
+Roadmap 与阶段顺序不变：**Current → P1 → P2 → P3**；继续 **Gate 串行、Discovery 并行**。
+
+证据：[`08-strategic-validation-update.md`](08-strategic-validation-update.md)、[`evidence/08-sources.md`](evidence/08-sources.md)。评审：[`reviews/08-achatgpt56sol-review.md`](reviews/08-achatgpt56sol-review.md)。
 
 ## 后续维护规则
 每完成一个 Step：
