@@ -78,6 +78,7 @@ Roadmap 阶段的默认单位是**业务能力、用户关系、产品形态、�
 | Step 3 | 重点玩家定位与核心用户研究 | ✅ Completed | [`03-player-positioning.md`](03-player-positioning.md) |
 | Step 4 | 市场竞争结构：直接 / 相邻 / Rail 替代 / 潜在 | ✅ Completed | [`04-competition-map.md`](04-competition-map.md) |
 | Step 5 | AIX 当前生态位、目标生态位与市场白地 | ✅ Completed | [`05-aix-positioning.md`](05-aix-positioning.md) |
+| Roadmap v1 | Business + Product Strategic Roadmap | ✅ Completed | `06-strategic-roadmap.md` |
 | Final | 综合市场地图与管理层结论 | ✅ Completed | `final-market-positioning.md` |
 
 ## 当前阶段验收
@@ -143,6 +144,12 @@ Step 5 按既定流程完成 **6 路 DeepSeek-V4-Flash/high Multi-Agent 证据 �
 
 评审记录：`reviews/05-gpt56-review.md`、`reviews/05-grok46-review.md`。
 证据索引：`evidence/05-sources.md`。
+
+### Roadmap v1 验收
+
+Roadmap v1 已经 **AChatGPT GPT-5.6 Sol/high：PASS**，**P0=0、P1=0**，结论为 **ROADMAP ACCEPT**；下一步：**可固化 v1**。
+
+正式执行方式：**Gate 串行、Discovery 并行**。Discovery 可提前进行，但前一 Gate 未成立前不提前规模化建设。
 
 ## 后续维护规则
 每完成一个 Step：
