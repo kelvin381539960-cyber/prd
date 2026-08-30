@@ -80,6 +80,7 @@ Roadmap 阶段的默认单位是**业务能力、用户关系、产品形态、�
 | Step 5 | AIX 当前生态位、目标生态位与市场白地 | ✅ Completed | [`05-aix-positioning.md`](05-aix-positioning.md) |
 | Roadmap v1 | Business + Product Strategic Roadmap | ✅ Completed | `06-strategic-roadmap.md` |
 | Final | 综合市场地图与管理层结论 | ✅ Completed | `final-market-positioning.md` |
+| Strategic Validation v1 | Business Strategy + Product Strategy + Key Assumption Validation | ✅ Completed | [`07-strategic-validation.md`](07-strategic-validation.md) |
 
 ## 当前阶段验收
 Step 1 已于 2026-08-29 经 **Advance Codex CLI → ARouter → grok-4.6 → xhigh** 两轮严格评审：
@@ -150,6 +151,20 @@ Step 5 按既定流程完成 **6 路 DeepSeek-V4-Flash/high Multi-Agent 证据 �
 Roadmap v1 已经 **AChatGPT GPT-5.6 Sol/high：PASS**，**P0=0、P1=0**，结论为 **ROADMAP ACCEPT**；下一步：**可固化 v1**。
 
 正式执行方式：**Gate 串行、Discovery 并行**。Discovery 可提前进行，但前一 Gate 未成立前不提前规模化建设。
+
+### Strategic Validation v1 验收
+
+Strategic Validation v1 已经 **AChatGPT GPT-5.6 Sol/high：CLEAN PASS**（Job `job_01M19EH1H4YFW81YB1ZH2YM7S2`），**P0=0、P1=0、P2=0**，结论为 **STRATEGIC_VALIDATION ACCEPT**。
+
+当前战略验证状态：
+- **P1 One Money Relationship**：`NOT YET VALIDATED / DATA GAP`；需补 anonymous cohort，证据不足不得判负向，余额停留不得单独当 retention。
+- **P2 Multi-rail Everyday Spend**：**QR Ph P2M = Priority Discovery Rail**；仅为 discovery priority，不是 committed build / white space / moat。
+- **P3 / J1**：**OFW / cross-border remittance = Primary J1 Discovery Wedge**；不是已证明的 AIX 产品方向；Payroll / freelancer invoice 继续作为 secondary research tracks。
+
+Roadmap 阶段顺序不变：**Current → P1 → P2 → P3**；正式执行方式继续保持 **Gate 串行、Discovery 并行**。
+
+评审记录：`reviews/07-achatgpt56sol-review.md`。
+证据索引：`evidence/07-sources.md`。
 
 ## 后续维护规则
 每完成一个 Step：
