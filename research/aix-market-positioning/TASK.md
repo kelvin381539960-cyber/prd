@@ -180,7 +180,7 @@ Roadmap 阶段的默认单位是**业务能力、用户关系、产品形态、�
 | Strategic Validation 11 | Netbank public feasibility closure | ✅ Completed | [`11-netbank-public-feasibility-closure.md`](11-netbank-public-feasibility-closure.md) |
 | Strategic Validation 12 | Netbank internal relationship validation route | ✅ Completed | [`12-netbank-internal-relationship-validation-route.md`](12-netbank-internal-relationship-validation-route.md) |
 | Strategic Validation 13 | Netbank internal owner route identification | ⚠️ Historical scope drift / archived | [13-netbank-internal-owner-route.md](13-netbank-internal-owner-route.md) |
-| Strategic Validation 14 | Target User Group Analysis | ⏳ Pending | — |
+| Strategic Validation 14 | Differentiated Route & Strategic Focus | ✅ Completed | [`14-target-user-group-analysis.md`](14-target-user-group-analysis.md) |
 
 ## 当前阶段验收
 Step 1 已于 2026-08-29 经 **Advance Codex CLI → ARouter → grok-4.6 → xhigh** 两轮严格评审：
@@ -353,73 +353,81 @@ Roadmap 仍为 `Current → P1 One Money Relationship → P2 Multi-rail Everyday
 
 Stage 13 曾经执行并形成历史产物，但按当前 authoritative scope 复核后被判定为超出本研究任务边界。它涉及 internal owner/sponsor route，属于 `Downstream Vendor/Implementation Validation`，不是 active task，也不是 continuation point。其历史文件可保留用于审计，但不得作为后续 owner/vendor/商务/合规落地工作的授权或 handoff；当前主线先进入 Strategic Validation 14，不进入 owner/vendor route 或 Remittance / QR / Send capability prioritization。
 
-### Strategic Validation 14 — Target User Group Analysis（Pending）
+### Strategic Validation 14 — Differentiated Route & Strategic Focus
 
-**状态：`Pending`。** 这是下一独立阶段，且必须先于 Remittance / QR / Send capability prioritization。它要重新回答：“谁是 AIX 的核心目标用户？”既有阶段对 J1、OFW / remittance、crypto-native、stablecoin-native 或其他群体的结论，只能作为待复核的历史假设，不得直接当作本阶段的用户前提。
+**状态：`Completed`（Stage14 strategic discovery closure）。** 外部提供的 **AChatGPT GPT-5.6 Sol/high CLEAN PASS** 已物化至 [`reviews/14-achatgpt56sol-review.md`](reviews/14-achatgpt56sol-review.md)。本状态表示 Strategy + Capability Level 研究包完成，不表示 H1 已验证、`Primary strategic route` 已选定、P1 已通过或 P2 已解锁。
 
-此前生成但未评审的 Remittance Stage 14 草稿（14-j1-remittance-strategic-model.md、evidence/14-sources.md）已作废并删除，不属于正式研究产物、证据源或 continuation point；Remittance 仅作为待本阶段重新验证的用户/场景假设。
+本阶段先判断 AIX 应争夺的差异化 money relationship / strategic route，再由路线反推目标用户；不得从 AIX 当前能力、内部使用情况、当前地区或既有 Roadmap 倒推路线或用户。
 
-#### 阶段战略问题与边界
+#### 核心战略问题
 
-本阶段只在 **Strategy + Capability Level** 判断候选用户群、核心 User Jobs、AIX 应建立的用户关系及其对定位 / Roadmap / Capability 的影响，不做功能设计或实现设计。
+`在 stablecoin/crypto → real-world purchasing power 市场里，哪些赛道已经同质化，AIX 应争夺哪一种 money relationship / strategic route，为什么；该路线成立后服务谁。`
 
-不得因 AIX 当前能力、当前地区覆盖、现有渠道或既有 Roadmap 反推核心用户。每个候选群体必须按证据逐项判断；证据不足时保留 `Unknown`，没有证据不得将任何群体升级为 **Core Target User**。
+#### 固定 research order
 
-#### 最低研究维度
+`Market demand → Job clusters → Competitive archetypes → Saturated/common routes → White space / differentiation hypotheses → Primary strategic route → Route-derived target user → Capability-level priorities → Validation Gates`
 
-至少覆盖以下维度，并为每个候选群体标注证据强弱与 Unknown：
+研究顺序是 **route-first**。本阶段当前只允许确定 `Leading Discovery Candidate(s)`，不要求也不预设选出 Primary：
 
-- 候选用户群及其可区分的分层依据；
-- 核心 Jobs；
-- 收入 / 资金来源及币种形态（`fiat` / `crypto` / `stablecoin`）；
-- 当前金融行为与 crypto 行为；
-- stablecoin 认知与真实使用；
-- 为什么愿意持有或使用 stablecoin；
-- 痛点强度；
-- 使用频率与价值；
-- 当前替代方案；
-- AIX fit；
-- 市场规模与证据强度；
-- 可触达性；
-- 留存 / 资金关系潜力。
+- `Primary strategic route = NOT_YET_SELECTED`。
+- 路线只有在竞争差距与用户残余痛点证据通过相应 route-level gates 后，才能从 candidate 升级为 Primary。
+- 当前 leading hypothesis 为 **`H1 — Digital-dollar value continuity → local everyday purchasing power`**，仅为 candidate。旧的 `F — Digital Dollar / Stablecoin → Local Everyday Purchasing Power` 只是 audit mapping，不是预选答案。
 
-#### 币种口径硬约束
+#### 阶段边界与纠偏
 
-必须明确区分 **“收入 / 资金来源的币种”** 与 **“进入 AIX 后用户愿意持有或使用的资金形态”**。前者不得推导后者；两者分别记录 `fiat` / `crypto` / `stablecoin` / `Unknown`，并说明证据边界。
+- `AIX internal usage/data = Out of scope for route selection`。未来只能作为路线选定后的补充验证，不得决定本阶段路线。
+- 本阶段只做 **Strategy + Capability Level**：市场需求、Jobs、竞争格局、money relationship、路线、路线派生的目标用户及 capability-level priorities；不做功能、页面、API、Vendor、partner、owner、商务 / 合规落地或实现设计。
+- 仅使用已提供的外部市场与竞争证据，不继续扩展研究范围，不把 stablecoin activity 当作 everyday-payment 或 retained-money 事实。
+- `Stablecoin-native Everyday Money Account`、`OFW/Remittance J1`、`PH proof market`、`card wedge`、`S1∩S2` 全部只作为历史 hypothesis，不是本阶段 premise，也不预设任何一个为 Primary。
+- 路线比较必须统一在同一 `money relationship / user outcome` 层级，覆盖 Market demand/frequency、pain、stablecoin necessity vs merely rail、competition saturation、commoditization、relationship depth、reachability、strategic fit、evidence strength、right-to-win status；不打虚假数字分。`Card`、`account` 等 product form，`payroll/payout` 等 distribution layer，以及 `stablecoin rail` 等 mechanism 不能与 end-user outcome 混排成同层级路线。
 
-#### 阶段输出与完成条件
+#### 当前候选与筛选纪律
 
-阶段输出必须包括：
+- **当前决策：** `Primary strategic route = NOT_YET_SELECTED`；只记录 `Leading Discovery Candidate(s)`，不把 H1 写成 Primary。
+- **Leading Discovery Candidate：** H1 — `Digital-dollar value continuity → local everyday purchasing power`。差异化待验证的是 digital-dollar value 在特定国家直到日常使用前的连续性与 local-money outcome depth，不是 rail 数量。
+- **Secondary Discovery Candidates：** destination-side retained digital-dollar relationship after cross-border income/remittance；recurring global income 作为 downstream money relationship 的 anchor。二者都不是 Primary。
+- **Do not lead with：** card-first spend、generic stablecoin global account、generic fiat cross-border/remittance、upstream payroll/payout、generic stablecoin remittance rail。
+- `AIX Right-to-win = Unknown`。`multi-rail local everyday usability 是否真的是用户高价值痛点，而不是竞品很快就能补齐的 feature bundle = Unknown`。
+- H1 与 KAST 比较时，必须承认 KAST 已占 broad `earn globally → hold digitally → spend locally`；H1 不能以 receive/hold/spend 或 generic stablecoin account 自称差异。H1 与 RedotPay 比较时，card-first 竞争已拥挤，但这不自动证明 H1 有 moat。
 
-- `Primary / Secondary / Non-target` 用户分层；
-- 可被证据支持的核心用户定义；
-- 各分层、各关键维度的证据强弱与 `Unknown`；
-- 对定位、Roadmap 与 Capability 优先级的影响，以及仍需验证的 Gate / 假设。
+#### Route-derived target user 与 capability-level 输出
 
-在本阶段完成并形成可审计结论前，暂停 Remittance / QR / Send 的进一步优先级结论；它们的 capability prioritization 是本阶段之后的下游工作。全程保持 **Strategy + Capability Level**，禁止下钻到功能、页面、API、Vendor、partner、owner 或实现细节。
+目标用户必须由 money relationship 定义，不得以职业标签作为定义。至少分别记录 Money Source、Source Currency、Preferred Money Form、Core Job、替代方案为何失败的 Hypothesis / Unknown；不得假定工资币种，也不得把一次性 cash-out / spend 当成长期资金关系。
 
-## 下一位主控接手协议
+Capability-level 输出区分 **route-defining** 与 **table stakes**，并明确哪些只是候选、哪些仍需验证；不下钻到功能设计。路线选定前不得形成 Remittance / QR / Send 的进一步 capability prioritization。
 
-### 当前 handoff：Strategic Validation 14 — Target User Group Analysis
+#### Validation Gates
 
-下一步只做 Target User Group Analysis：重新判断 AIX 的核心目标用户，不预设 OFW / Remittance、crypto-native 或 stablecoin-native 任一群体为核心；完成前不得继续形成 Remittance / QR / Send 的进一步 capability prioritization 结论。
+- `DR-1 Job/Target` — 同一批目标用户是否高频 / 高价值经历 digital-dollar → local purchasing-power Job；`NOT_YET_PASS`。
+- `DR-2 Differentiated outcome` — 相对 KAST / RedotPay / Wise / Deel / Stripe 是否有 residual pain 与 reason to switch/use AIX；`NOT_YET_PASS`。
+- `DR-3 Multi-rail necessity / defensibility` — 若 multi-rail 不是 material pain / defensible，且 DR-2 也未证明独立的 `hold-until-use / country-specific local-money depth` residual gap，则 **abandon H1/F as differentiated route**；不得只把 multi-rail 降为 table stakes 后继续保留 F。若独立 residual gap 已被 DR-2 证明，multi-rail 可降为 table stakes，但 H1 仍只能作为 candidate 继续验证；`NOT_YET_PASS`。
+- `DR-4 Reachable geography` — 若找不到至少一个可识别、可触达且 gap material 的 geography，则 **route-level abandon / downgrade geography-based H1**；不能用宏观 crypto adoption 替代 exact reachable market；`NOT_YET_PASS`。
+- `DR-5 Money relationship depth` — 若只有偶发 cash-out / spend，没有 repeated digital-dollar → local-use relationship，则 **downgrade H1 为 spend utility**，不是 strategic money relationship，不能升级为 Primary；`NOT_YET_PASS`。
 
-- 研究单位是候选用户群、User Jobs、资金关系、市场证据与 AIX fit，最终回传 Primary / Secondary / Non-target 分层及其对定位、Roadmap、Capability prioritization 的影响；不是 Vendor、partner、内部 owner 或 feature list。
-- 逐项核对候选用户群、Jobs、收入 / 资金来源币种、当前金融 / crypto 行为、stablecoin 认知与真实使用、持有 / 使用动机、痛点、频率 / 价值、替代方案、AIX fit、市场规模 / 证据强度、可触达性与留存 / 资金关系潜力。
-- 严格分开“收入 / 资金来源币种”与“进入 AIX 后愿意持有 / 使用的资金形态”；任一关键判断无证据时标记 `Unknown`，不得升级为 Core Target User。
-- 不因 AIX 当前能力、当前地区或既有 Roadmap 倒推用户；既有 J1 / OFW / Remittance / crypto-native / stablecoin-native 结论均作为待复核假设，而非预设答案。
-- 确认分析与预期输出仍处于 Strategy + Capability Level；不得研究功能、页面、API、Vendor、partner、owner、商务 / 合规落地或实现细节。
-- 本阶段不研究 Vendor / partner / supply path；既有外部证据仅可用于理解用户当前替代方案，不在本阶段形成新的供应可行性、合作方或实施结论。
-- P1 保持 **`NOT_YET_PASS`**；P2 scale 继续 blocked by P1；Roadmap 保持 `Current → P1 One Money Relationship → P2 Multi-rail Everyday Spend → P3 Everyday Money Account`；`Gate Serial / Discovery Parallel` 不变。
+完成条件：报告必须完成同层级的 Jobs / money-relationship 比较、competitive archetypes、并列 white-space candidates、route-derived target user、potential capability domains 与 DR-1..DR-5；在证据通过前保持 `Primary strategic route = NOT_YET_SELECTED`，全部关键未知保留 `Unknown`。
 
-接手本任务时，先执行以下检查，再做任何研究：
-1. 用一句话复述本轮要回答的“谁是 AIX 核心目标用户”战略问题；
-2. 列出不预设结论的候选用户群，并对每个群体逐项检查最低研究维度、证据强弱与 Unknown；
-3. 确认分析与预期输出仍处于 Strategy + Capability Level；
-4. 明确本轮不会研究功能、页面、API、Vendor、partner、owner、商务 / 合规落地或实现细节；
-5. 在 Stage 14 结论完成前，不形成 Remittance / QR / Send 的进一步优先级结论；发生 scope drift 时立即停止并回退。
+## Stage14 closure / downstream handoff boundary
 
-默认交付格式优先为：**候选用户群 → Primary / Secondary / Non-target → 核心用户定义 → 证据强弱 / Unknown → 定位 / Roadmap / Capability 影响**。不输出功能详细方案。
+Stage14 已完成为一个有边界的 Strategy + Capability Level research package。下游如继续工作，必须保留 `Primary strategic route = NOT_YET_SELECTED`、H1=`NOT_YET_PASS`、`AIX Right-to-win = Unknown` 以及下方所有 scope / gate 约束；不得把 CLEAN PASS 解读为 H1 validation、P1 acceptance、P2 scale unblock 或 implementation authorization。
+
+### 固化的 Stage14 closure invariants
+
+- 严格按以下顺序工作：`Market demand → Job clusters → Competitive archetypes → Saturated/common routes → White space / differentiation hypotheses → Primary strategic route → Route-derived target user → Capability-level priorities → Validation Gates`。
+- `AIX internal usage/data = Out of scope for route selection`；未来只能作为路线选定后的补充验证，不得决定本阶段路线。只用已给外部市场 / 竞争证据，不再扩展研究。
+- 必须先建立同一层级的 Market Jobs / Money-relationship map，再单独建立 Competitive archetypes / who owns what；必须比较至少 J1–J5，优先补充 J6，并保持 product form、distribution layer、rail mechanism 不与 end-user outcome 混排。
+- 当前输出必须明确 `Primary strategic route = NOT_YET_SELECTED`，只确定 `Leading Discovery Candidate(s)`。H1 — `Digital-dollar value continuity → local everyday purchasing power` 是 leading candidate；H2 destination-side retained digital-dollar relationship 与 H3 recurring global income anchor（如保留）是 Secondary Discovery Candidates。
+- 必须明确：KAST 已占 broad `earn globally → hold digitally → spend locally`；H1 只有在特定国家、本地日常 money contexts 的深度与 `digital-dollar value continuity until use` 上找到 residual gap 才可能差异化；`H1 differentiation = hypothesis only`。RedotPay 等 card-first 拥挤说明 H1 仍需独立证明 moat。
+- 必须明确：真正待验证的是 money relationship / user outcome，不是单独增加 QR、卡或 acceptance；`AIX Right-to-win = Unknown`。
+- 必须明确关键 Unknown：`multi-rail local everyday usability 是否真的是用户高价值痛点，而不是竞品很快就能补齐的 feature bundle = Unknown`。
+- `Secondary/adjacency` 仅包括 H2/H3 等候选；不得把任一候选升级为 Primary。
+- 必须有 **Do not lead with**：card-first spend、generic stablecoin global account、generic fiat cross-border/remittance、upstream payroll/payout、generic stablecoin remittance rail。
+- Route-derived target user 不以职业标签定义；至少写清 Money Source、Source Currency、Preferred Money Form、Core Job，以及替代方案失效的 Hypothesis / Unknown；不得假定工资币种。
+- Capability 只分 **Potential differentiating capability domains** 与 table stakes：前者包括 local purchasing-power depth、digital-dollar continuity until use、relationship anchor、geography-specific local-money coverage；后者包括 basic wallet/hold、basic stablecoin receive、card、basic transfer、merchant acceptance。`multi-rail breadth` 本身不是 moat，必须与 user outcome / continuity 绑定；不得做功能设计。
+- Validation Gates 固定为 `DR-1 Job/Target`、`DR-2 Differentiated outcome`、`DR-3 Multi-rail necessity`、`DR-4 Reachable geography`、`DR-5 Money relationship depth`，全部初始状态为 **`NOT_YET_PASS`**；失败按报告中定义的 abandon / downgrade / no-right-to-win 处理。
+- 历史 `Stablecoin-native Everyday Money Account`、`OFW/Remittance J1`、`PH proof market`、`card wedge`、`S1∩S2` 只可放入 Historical hypotheses reset，不能作为 premise 或 Primary。
+- 在 Stage14 完成且 Gate 结论可审计前，不形成 Remittance / QR / Send 的进一步 capability prioritization；不研究功能、页面、API、Vendor、partner、owner、商务 / 合规或实现细节。
+
+默认交付格式：**Executive conclusion → Market / competition route map → Route comparison → Route selection status（Primary may remain NOT_YET_SELECTED + Leading/Secondary Discovery Candidates + Do not lead with）→ Where differentiation can come from → Route-derived target user → Capability implications（Potential differentiating capability domains vs table stakes）→ Validation Gates（DR-1..DR-5）→ Historical hypotheses reset → Plain-language conclusion**。
 
 ## 后续维护规则
 每完成一个 Step：
