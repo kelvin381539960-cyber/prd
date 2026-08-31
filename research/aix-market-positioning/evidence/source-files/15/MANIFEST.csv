@@ -1,0 +1,11 @@
+source_id,storage_type,local_path_or_reference,sha256,source_date,notes
+ARGENTINA-CARDS,link-only,evidence/15-ws2-argentina-h1.md,,2026-08-31,Stage15 Argentina cards; public source links only; no new downloaded file.
+WS6-RT,link-only,evidence/15-ws6-competitor-redteam.md,,2026-08-31,Stage15 WS6 red-team evidence group; public source links only; no new downloaded file.
+WS1,local-stage15-artifact,evidence/15-ws1-route-normalization.md,,2026-08-31,Stage15 current workstream artifact; no new downloaded file.
+WS2,local-stage15-artifact,evidence/15-ws2-job-target.md,,2026-08-31,Stage15 current workstream artifact; no new downloaded file.
+WS3,local-stage15-artifact,evidence/15-ws3-differentiated-outcome.md,,2026-08-31,Stage15 current workstream artifact; no new downloaded file.
+WS4,local-stage15-artifact,evidence/15-ws4-relationship-depth.md,,2026-08-31,Stage15 current workstream artifact; no new downloaded file.
+WS5,local-stage15-artifact,evidence/15-ws5-geography-reachability.md,,2026-08-31,Stage15 current workstream artifact; no new downloaded file.
+WS6,local-stage15-artifact,evidence/15-ws6-competitor-redteam.md,,2026-08-31,Stage15 current workstream artifact; no new downloaded file.
+WS7,local-stage15-artifact,evidence/15-ws7-redteam-adjudication.md,,2026-08-31,Stage15 current workstream artifact; no new downloaded file.
+ST14-OFFICIAL-ARCHIVES,reused-existing-archive,evidence/source-files/14/,,Unknown,Reused Stage14 official archives by path reference only; no files copied; checksum retained in Stage14 manifest; not duplicated here.

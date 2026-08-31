@@ -1,0 +1,17 @@
+route_or_cell,gate,status,evidence_basis,decision_boundary
+H1 normalized,DR-1,NOT_YET_PASS,15-ws2-job-target.md; 15-ws7-redteam-adjudication.md,No promotion; the same-country + same-cohort + same-outcome Job/Target chain remains incomplete.
+H1 normalized,DR-2,NOT_YET_PASS,S15-AR-01..05; RT-H1-01/02; 15-ws7-redteam-adjudication.md,No promotion; Argentina broad H1 and PH H1 rail-only falsifiers do not establish the normalized H1 outcome.
+H1 normalized,DR-3,NOT_YET_PASS,RT-H1-01/02; 15-ws7-redteam-adjudication.md,No promotion; the rail-only in-cell falsifier does not falsify normalized H1.
+H1 normalized,DR-4,NOT_YET_PASS,15-ws2-job-target.md; 15-ws7-redteam-adjudication.md,No promotion; reachable material-gap geography is not established.
+H1 normalized,DR-5,NOT_YET_PASS,15-ws4-relationship-depth.md; 15-ws7-redteam-adjudication.md,No promotion; repeated continuity/depth is not established.
+H2 normalized,DR-1,NOT_YET_PASS,15-ws2-job-target.md; 15-ws7-redteam-adjudication.md,No promotion; the same-country + same-cohort + same-outcome Job/Target chain remains incomplete.
+H2 normalized,DR-2,NOT_YET_PASS,RT-H2-01; RT-H2-04; 15-ws7-redteam-adjudication.md,No promotion; H2 transport-only competitive disconfirmation does not establish the normalized H2 outcome.
+H2 normalized,DR-3,NOT_YET_PASS,RT-H2-01; RT-H2-04; 15-ws7-redteam-adjudication.md,No promotion; no single-cell H2 transport falsifier is recorded and normalized H2 remains NOT_YET_PASS.
+H2 normalized,DR-4,NOT_YET_PASS,15-ws2-job-target.md; 15-ws7-redteam-adjudication.md,No promotion; reachable material-gap geography is not established.
+H2 normalized,DR-5,NOT_YET_PASS,RT-H2-04; 15-ws4-relationship-depth.md; 15-ws7-redteam-adjudication.md,No promotion; Mexico H2 normalized relationship remains NOT_YET_PASS.
+Argentina H1 broad outcome-coverage/rail-bundle,DR-2,FALSIFIED_IN_CELL,S15-AR-01..05; 15-ws7-redteam-adjudication.md,Applies only to the broad outcome-coverage/rail-bundle expression; normalized H1 remains NOT_YET_PASS.
+Argentina H1 broad outcome-coverage/rail-bundle,DR-3,FALSIFIED_IN_CELL,S15-AR-01..05; 15-ws7-redteam-adjudication.md,Applies only to the broad outcome-coverage/rail-bundle expression; normalized H1 remains NOT_YET_PASS.
+PH H1 rail-only,DR-3,FALSIFIED_IN_CELL,RT-H1-01/02; 15-ws7-redteam-adjudication.md,Applies only to the rail-only expression; normalized H1 remains NOT_YET_PASS.
+PH H2 transport-only,DR-3,Competitive disconfirmation / NOT_YET_PASS,RT-H2-04; 15-ws7-redteam-adjudication.md,Strong alternative pressure; RT-H2-04 is not a single matched country + cohort + outcome cell; no FALSIFIED_IN_CELL; normalized H2 remains NOT_YET_PASS.
+H0 baseline,route-selection,NOT_SELECTED_FROM_INSUFFICIENCY,RT-H0-01; 15-ws7-redteam-adjudication.md,H0 is not selected from insufficiency; no Primary route is selected.
+Primary strategic route,selection,NOT_YET_SELECTED,15-ws7-redteam-adjudication.md,No route is promoted while normalized H1/H2 remain NOT_YET_PASS.

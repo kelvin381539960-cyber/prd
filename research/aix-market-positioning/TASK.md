@@ -1,5 +1,5 @@
 # AIX 市场格局与产品定位研究任务
-
+**Stage15 status:** ✅ Completed — bounded public-evidence / Strategy+Capability research package; final Sol/high review = CLEAN PASS (job `job_01M1BMP3V2YG5KB2SVWFGS2X70`); not route-selected, not H1-H2 validated, not P1 passed, and not P2 unblocked.
 - **状态**：Active
 - **开始日期**：2026-08-29
 - **研究对象**：AIX
@@ -181,6 +181,7 @@ Roadmap 阶段的默认单位是**业务能力、用户关系、产品形态、�
 | Strategic Validation 12 | Netbank internal relationship validation route | ✅ Completed | [`12-netbank-internal-relationship-validation-route.md`](12-netbank-internal-relationship-validation-route.md) |
 | Strategic Validation 13 | Netbank internal owner route identification | ⚠️ Historical scope drift / archived | [13-netbank-internal-owner-route.md](13-netbank-internal-owner-route.md) |
 | Strategic Validation 14 | Differentiated Route & Strategic Focus | ✅ Completed | [`14-target-user-group-analysis.md`](14-target-user-group-analysis.md) |
+| Strategic Validation 15 | Country × Cohort × Outcome Route Elimination | ✅ Completed | [`15-residual-gap-route-selection-validation.md`](15-residual-gap-route-selection-validation.md) |
 
 ## 当前阶段验收
 Step 1 已于 2026-08-29 经 **Advance Codex CLI → ARouter → grok-4.6 → xhigh** 两轮严格评审：
@@ -428,6 +429,37 @@ Stage14 已完成为一个有边界的 Strategy + Capability Level research pack
 - 在 Stage14 完成且 Gate 结论可审计前，不形成 Remittance / QR / Send 的进一步 capability prioritization；不研究功能、页面、API、Vendor、partner、owner、商务 / 合规或实现细节。
 
 默认交付格式：**Executive conclusion → Market / competition route map → Route comparison → Route selection status（Primary may remain NOT_YET_SELECTED + Leading/Secondary Discovery Candidates + Do not lead with）→ Where differentiation can come from → Route-derived target user → Capability implications（Potential differentiating capability domains vs table stakes）→ Validation Gates（DR-1..DR-5）→ Historical hypotheses reset → Plain-language conclusion**。
+
+### Strategic Validation 15 — Country × Cohort × Outcome Route Elimination (Completed)
+
+**Subtitle:** Residual Gap & Route Selection Validation. **Status:** `Completed` — bounded public-evidence / Strategy + Capability research closure. **Independent Stage15 review:** AChatGPT GPT-5.6 Sol/high `CLEAN PASS` (Job `job_01M1BMP3V2YG5KB2SVWFGS2X70`; P0=0, P1=0, P2=0). This does not mean a Primary route was selected, H1/H2 validated, P1 passed, or P2 unblocked.
+
+Stage15 is an **H1 / H2 / H0 candidate-route knockout**, not an H1 positive-evidence project. It starts from Stage14 `Completed` with `Primary strategic route = NOT_YET_SELECTED`, H1=`Leading Discovery Candidate / NOT_YET_PASS`, H2=`Secondary Discovery Candidate / NOT_YET_PASS`, H3 as a `Source-of-funds / relationship-anchor dimension` rather than a same-level route, and `AIX Right-to-win = Unknown`.
+
+The minimum validation unit is `Route × Country × Cohort × Job/Outcome × Current Alternative Stack`. A Gate PASS requires a complete evidence chain in the same country + cohort + outcome cell; evidence cannot be stitched across countries, cohorts, or outcomes. Missing evidence is `NOT_YET_PASS` and only blocks promotion. Only direct disconfirming evidence or a satisfied pre-registered falsifier can produce `FALSIFIED_IN_CELL`.
+
+The Stage15 architecture requires:
+
+- matched `same market + same cohort + same outcome` evidence;
+- explicit normalization of H1, H2, and H0 with user outcome, starting money, relationship depth, competitor set, and falsifier;
+- evidence insufficiency to remain `NOT_YET_PASS / no promotion`;
+- kill/downrank only on actual disconfirming evidence or a satisfied pre-registered falsifier;
+- seven workstreams: route normalization, Job/Target, differentiated outcome, relationship depth, geography/reachability, defensibility, and red-team adjudication;
+- DR-1 Job/Target, DR-2 Differentiated outcome, DR-3 Defensibility, DR-4 Reachable geography, and DR-5 Money relationship depth; and
+- no Remittance / QR / Send capability backlog, launch-market decision, AIX internal-data route selection, or implementation-level work.
+
+The only promotion end states are H1 promoted to Primary or H2 promoted to Primary. If H1/H2 both fail and H0 wins, no Primary is selected. If evidence is insufficient, no Primary is selected and bounded validation continues. Roadmap, P1, and P2 remain unchanged: `P1 = NOT_YET_PASS`, P2 scale remains blocked by P1, and the roadmap remains `Current → P1 One Money Relationship → P2 Multi-rail Everyday Spend → P3 Everyday Money Account`.
+
+Architecture: [`15-residual-gap-route-selection-validation.md`](15-residual-gap-route-selection-validation.md). Evidence register: [`evidence/15-sources.md`](evidence/15-sources.md). Review: [reviews/15-achatgpt56sol-review.md](reviews/15-achatgpt56sol-review.md).
+
+Six canonical workstream working records are now materialized: [`evidence/15-ws1-route-normalization.md`](evidence/15-ws1-route-normalization.md), [`evidence/15-ws2-job-target.md`](evidence/15-ws2-job-target.md), [`evidence/15-ws3-differentiated-outcome.md`](evidence/15-ws3-differentiated-outcome.md), [`evidence/15-ws4-relationship-depth.md`](evidence/15-ws4-relationship-depth.md), [`evidence/15-ws5-geography-reachability.md`](evidence/15-ws5-geography-reachability.md), and [`evidence/15-ws7-redteam-adjudication.md`](evidence/15-ws7-redteam-adjudication.md). These are mechanical status/evidence-boundary records only; all route/Gate states remain unchanged.
+
+WS2 Argentina update (2026-08-31): the matched public-evidence slice is materialized in [`evidence/15-ws2-argentina-h1.md`](evidence/15-ws2-argentina-h1.md). `Argentina H1 broad outcome-coverage / rail-bundle expression = FALSIFIED_IN_CELL; normalized H1 = NOT_YET_PASS; Argentina validation context = DOWNRANKED`: belo and Lemon directly cover the matched digital-dollar/stablecoin → local everyday-use outcome; KAST adds Argentina-specific merchant coverage; Deel/RedotPay provide bounded additional pressure. No same-cohort residual pain, switching reason, or repeated retained-use evidence was found. This is first-class incumbent disconfirmation for the broad H1 gap, not a global H1 kill or normalized H1 validation.
+
+WS6 competitor/red-team update (2026-08-31): the bounded register is materialized in [`evidence/15-ws6-competitor-redteam.md`](evidence/15-ws6-competitor-redteam.md). Existing incumbents, local wallets, and the combined status quo retain `FALSIFIED_IN_CELL` only for the narrower PH H1 rail-only expression; H2 transport-only is `Competitive disconfirmation / NOT_YET_PASS` because `RT-H2-04` is not locked to one country + cohort + outcome cell. Normalized H1 and H2 remain `NOT_YET_PASS` because same-country + same-cohort + same-outcome behavior, residual pain, switching/parallel-use reason, and repeated retention/reuse are not established. `WS6 = bounded-complete`; `Primary strategic route = NOT_YET_SELECTED`; H0 is not selected from insufficiency; the bounded Stage15 research package is complete; route validation remains unresolved.
+
+Stage15 structured audit package materialized: [`evidence/data/15-route-cell-evidence.csv`](evidence/data/15-route-cell-evidence.csv), [`evidence/data/15-gate-status.csv`](evidence/data/15-gate-status.csv), and [`evidence/source-files/15/MANIFEST.csv`](evidence/source-files/15/MANIFEST.csv); final Sol/high review = CLEAN PASS.
+Final Stage15 outcome: `Primary strategic route = NOT_YET_SELECTED`; H1=`Leading Discovery Candidate / NOT_YET_PASS`; H2=`Secondary Discovery Candidate / NOT_YET_PASS`; H0=`Not selected from insufficiency`; H3 remains a source-of-funds / relationship-anchor dimension; `AIX Right-to-win = Unknown`. Argentina broad H1 and PH H1 rail-only are bounded falsifiers only; H2 transport-only is competitive disconfirmation / `NOT_YET_PASS`; Mexico is diagnostic only. Generic public provider/feature/rail browsing is STOP for this stage; the next useful evidence class is matched same-country + same-cohort + same-outcome user/behavior validation.
 
 ## 后续维护规则
 每完成一个 Step：
