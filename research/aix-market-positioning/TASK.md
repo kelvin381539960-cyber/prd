@@ -145,6 +145,7 @@ Roadmap 阶段的默认单位是**业务能力、用户关系、产品形态、�
 | Strategic Validation 10 | QR Ph named partner + operating model + economics discovery | ✅ Completed | [`10-qrph-partner-operating-model.md`](10-qrph-partner-operating-model.md) |
 | Strategic Validation 11 | Netbank public feasibility closure | ✅ Completed | [`11-netbank-public-feasibility-closure.md`](11-netbank-public-feasibility-closure.md) |
 | Strategic Validation 12 | Netbank internal relationship validation route | ✅ Completed | [`12-netbank-internal-relationship-validation-route.md`](12-netbank-internal-relationship-validation-route.md) |
+| Strategic Validation 13 | Netbank internal owner route identification | ✅ Completed | [`13-netbank-internal-owner-route.md`](13-netbank-internal-owner-route.md) |
 
 ## 当前阶段验收
 Step 1 已于 2026-08-29 经 **Advance Codex CLI → ARouter → grok-4.6 → xhigh** 两轮严格评审：
@@ -313,24 +314,39 @@ Roadmap 仍为 `Current → P1 One Money Relationship → P2 Multi-rail Everyday
 
 证据索引：[`evidence/12-sources.md`](evidence/12-sources.md)。评审：[`reviews/12-achatgpt56sol-review.md`](reviews/12-achatgpt56sol-review.md)。
 
+### Strategic Validation 13：Netbank Internal Owner Route Identification
+
+本阶段已完成 **Strategy + Capability Level 的内部 owner route 物化**，并经 **AChatGPT GPT-5.6 Sol/high** 独立验收评审获得 **CLEAN PASS**（review job `job_01M1AS4ZYHJR1VHX8WTZXX0FAD`；P0=0/P1=0/P2=0；FINDINGS=NONE），当前状态为 **`✅ Completed`**。本阶段严格使用固定、脱敏的 Stage 13 事实，不新增研究、不重新解释结论，不执行 handoff、消息起草/发送或 contact action。
+
+关键验收状态：
+- **Internal owner route：** **`PARTIALLY_IDENTIFIED`**，不是 fully identified。证据支持 role/team chain：`PH Savings/Product → existing Netbank integration/operations → vendor/commercial/compliance sponsor`；这是 role/team path，不是 named-person ownership。
+- **Sponsor / authority：** exact vendor/commercial/compliance sponsor 及其是否有 authority to sponsor AIX onboarding 均为 **`UNKNOWN`**；当前 evidence/search coverage 未建立这些事实。缺失是 coverage limitation，不是 absence proof。
+- **Canonical states：** AIX partner status = **`DISCOVERY_CANDIDATE_NOT_APPROVED`**；group relationship = **`EXISTING_ACTIVE`**；vendor-access risk = **`REDUCED_NOT_ELIMINATED`**；owner sponsorship = **`UNKNOWN`**。
+- **Next route：** `INTERNAL_OWNER_HANDOFF_THEN_AIX_VENDOR_VALIDATION`；Stage 13 只细化 handoff 的起点，不代表 handoff 已执行或 AIX 已通过 validation。
+- **Unresolved branch：** 如果 internal route 无法识别 authorized sponsor，记录 **`INTERNAL_OWNER_UNRESOLVED`** 并停止；不得据此推断 approval。若后续 AIX-specific Vendor Validation 的核心条件失败，则 **downgrade Netbank and resume Tier-2 partner discovery**。
+- **Unchanged:** contract/commercial reuse 与 technical capability reuse 仍为 **`UNKNOWN`**；Stage 11/12 AIX-specific QRPh Unknowns 不变；P1 仍为 **`NOT_YET_PASS`**，P2 scale 仍被 P1 阻断，roadmap 与 `Gate Serial / Discovery Parallel` 不变。
+
+阶段边界：本阶段只完成 Strategy + Capability Level 的内部 owner route 定位，不进入 internal/external message drafting or sending、contact action、employee identification、contract negotiation、API、implementation-level fund-flow diagram、feature、UX、PRD、state machine、error handling、schema 或 code。
+
+证据索引：[`evidence/13-sources.md`](evidence/13-sources.md)。评审：[`reviews/13-achatgpt56sol-review.md`](reviews/13-achatgpt56sol-review.md)。
+
 ## 下一位主控接手协议
 
-### 当前 handoff：Netbank Internal Relationship Validation Route 12 之后
+### 当前 handoff：Strategic Validation 13 — Netbank Internal Owner Route Identification
 
-- 当前战略问题：集团既有 Netbank relationship 是否能在不推断 AIX approval 的前提下，降低 Netbank-led QR Ph P2M 的 vendor-access / execution risk？当前答案是：**wider-group relationship = `EXISTING_ACTIVE`；vendor-access risk = `REDUCED_NOT_ELIMINATED`（reduced, not eliminated）；AIX-specific status 仍为 `DISCOVERY_CANDIDATE_NOT_APPROVED`**。
-- 本轮之后的最小执行路线是 **`INTERNAL_OWNER_HANDOFF_THEN_AIX_VENDOR_VALIDATION`**（internal owner handoff, then AIX vendor validation）。先识别既有内部 Netbank vendor/commercial/compliance owner path；精确 owner identity 及其是否能 sponsor AIX onboarding 在本阶段仍为 Unknown。不得在此 handoff 中发送消息、发起联系或暴露员工姓名。
-- 既有 Savings/Transfer/Cash collaboration 仅证明集团级 operating relationship 与 operational maturity；**contract/commercial reuse = Unknown，technical capability reuse = Unknown**。不得把 group usage 扩写成 AIX eligibility、partner approval、QRPh P2M permissibility、pricing、license/compliance allocation 或 reusable code/API。
-- 完成授权的 AIX-specific Vendor Validation 时，只允许核验：AIX/non-resident eligibility；pooled corporate settlement for multiple end-users' QRPh merchant payments；USDC/USDT→PHP→QRPh composition；exact commercial quote/all-in economics；required licenses/OPS status；AML/KYC/transaction-monitoring/consumer-protection split；以及 user-frequency/everyday-spend use case 是否可接受。
-- **Pooled-settlement infrastructure pattern = Supported；AIX retail P2M permissibility = Unknown。** Stablecoin→PHP local-payout leg = Supported via licensed VASP partner；完整 consumer merchant-spend chain = Unknown。集团既有关系不改变这些 Stage 11 capability boundaries。
-- 若确认 eligibility + acceptable pooled model + credible stablecoin→PHP composition + acceptable regulatory burden + viable all-in economics，状态才可升级为 `PARTNER_VALIDATED_CANDIDATE` 供 P2 discovery；若 AIX-specific Vendor Validation 在上述任一核心条件上失败，则 **downgrade Netbank and resume Tier-2 partner discovery**。失败分支下 roadmap order、P1 Gate（`NOT_YET_PASS`）、P2 scale block 及 `Gate Serial / Discovery Parallel` 均不变，AIX 仍为 `DISCOVERY_CANDIDATE_NOT_APPROVED`；该状态仍不是 build authorization。
-- **Hardened Capability-level guardrail：** 必须停留在 Strategy + Capability Level；不得下钻到 partner outreach message、contact execution、contract negotiation wording、employee identification、API endpoint、implementation-level fund-flow diagram、feature、UX、PRD、state machine、error handling、schema 或 code。若能力级验证仍不足，记录 `Unknown / downstream validation required` 后停止。
-- P2 scale 仍被 P1 Gate 阻断；P1 仍为 `NOT_YET_PASS`；Roadmap 仍为 `Current → P1 One Money Relationship → P2 Multi-rail Everyday Spend → P3 Everyday Money Account`；Gate Serial / Discovery Parallel 不变。
+- 当前战略问题：在不推断 AIX approval 的前提下，内部证据能否把 Netbank owner handoff 的起点定位到可授权的 role/team route？当前答案是：内部 owner route = **`PARTIALLY_IDENTIFIED`**，不是 fully identified；支持的 chain 是 `PH Savings/Product → existing Netbank integration/operations → vendor/commercial/compliance sponsor`。
+- 当前 canonical states：AIX-specific partner status = **`DISCOVERY_CANDIDATE_NOT_APPROVED`**；group relationship = **`EXISTING_ACTIVE`**；vendor-access risk = **`REDUCED_NOT_ELIMINATED`**；owner sponsorship = **`UNKNOWN`**。Exact sponsor identity 及其 authority to sponsor AIX onboarding 仍为 Unknown；search coverage limitation 不能证明 absence。
+- 最小执行路线仍为 **`INTERNAL_OWNER_HANDOFF_THEN_AIX_VENDOR_VALIDATION`**：从 PH Savings/Product informed entry point 开始，沿 existing Netbank integration/operations route，定位 authorized vendor/commercial/compliance sponsor。Stage 13 只 refine handoff start，不代表 handoff 已执行、消息已起草/发送或 contact action 已发生。
+- 如果 internal route 无法识别 authorized sponsor，记录 **`INTERNAL_OWNER_UNRESOLVED`** 并停止；不得从 role/team chain 推断 approval、willingness 或 sponsorship。若后续 AIX-specific Vendor Validation 的 eligibility、acceptable pooled model、credible stablecoin→PHP composition、acceptable regulatory burden 或 viable all-in economics 任一核心条件失败，则 **downgrade Netbank and resume Tier-2 partner discovery**。
+- 既有 contract/commercial reuse 与 technical capability reuse 均保持 **`UNKNOWN`**；Stage 11/12 AIX-specific QRPh permissibility、完整 stablecoin→PHP→QRPh composition、AIX-specific approval/licensing、compliance split、all-in economics 与 use-case acceptance 等 Unknowns 均不变。不得把 group relationship 或 role/team path 扩写成 AIX eligibility、partner approval、pricing、license/compliance allocation 或 reusable code/API。
+- **Hardened Capability-level guardrail：** 必须停留在 Strategy + Capability Level；不得进入 internal/external message drafting or sending、contact execution、employee identification、contract negotiation wording、API endpoint、implementation-level fund-flow diagram、feature、UX、PRD、state machine、error handling、schema 或 code。若 authorized sponsor 仍无法确认，记录 `INTERNAL_OWNER_UNRESOLVED` 后停止。
+- P1 仍为 **`NOT_YET_PASS`**；P2 scale 仍被 P1 阻断；Roadmap 仍为 `Current → P1 One Money Relationship → P2 Multi-rail Everyday Spend → P3 Everyday Money Account`；Gate Serial / Discovery Parallel 不变。
 
 接手本任务时，先执行以下检查，再做任何研究：
-1. 用一句话复述当前战略问题；
-2. 列出本轮只需要判断的 Capability / 战略假设；
-3. 明确写出本轮 **不会研究** 的具体设计内容；
-4. 若现有证据已经足以做 Capability 决策，不再继续深挖功能内部细节；
+1. 用一句话复述 Stage 13 的当前战略问题；
+2. 只判断 internal owner route 的 role/team 定位、authorized sponsor 是否已建立，以及上述 canonical states 是否保持；
+3. 明确本轮 **不会研究** message drafting/sending、contact action、employee identification、contract negotiation、API、implementation-level fund-flow、feature、UX、PRD、state machine、error handling、schema 或 code；
+4. 若现有证据已足以做本阶段的 Capability 决策，不再深挖 owner 细节或功能内部细节；
 5. Reviewer 必须把 `是否越过 Capability Level` 作为独立 Gate。发生越界时，即使事实正确，也判执行偏航并退回。
 
 默认交付格式优先为：**战略结论 → Capability 需求/优先级 → 依据 → Unknown/风险 → Roadmap/Gate 影响**。不输出功能详细方案。
