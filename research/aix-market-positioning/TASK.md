@@ -357,6 +357,8 @@ Stage 13 曾经执行并形成历史产物，但按当前 authoritative scope �
 
 **状态：`Pending`。** 这是下一独立阶段，且必须先于 Remittance / QR / Send capability prioritization。它要重新回答：“谁是 AIX 的核心目标用户？”既有阶段对 J1、OFW / remittance、crypto-native、stablecoin-native 或其他群体的结论，只能作为待复核的历史假设，不得直接当作本阶段的用户前提。
 
+此前生成但未评审的 Remittance Stage 14 草稿（14-j1-remittance-strategic-model.md、evidence/14-sources.md）已作废并删除，不属于正式研究产物、证据源或 continuation point；Remittance 仅作为待本阶段重新验证的用户/场景假设。
+
 #### 阶段战略问题与边界
 
 本阶段只在 **Strategy + Capability Level** 判断候选用户群、核心 User Jobs、AIX 应建立的用户关系及其对定位 / Roadmap / Capability 的影响，不做功能设计或实现设计。
@@ -407,7 +409,7 @@ Stage 13 曾经执行并形成历史产物，但按当前 authoritative scope �
 - 严格分开“收入 / 资金来源币种”与“进入 AIX 后愿意持有 / 使用的资金形态”；任一关键判断无证据时标记 `Unknown`，不得升级为 Core Target User。
 - 不因 AIX 当前能力、当前地区或既有 Roadmap 倒推用户；既有 J1 / OFW / Remittance / crypto-native / stablecoin-native 结论均作为待复核假设，而非预设答案。
 - 确认分析与预期输出仍处于 Strategy + Capability Level；不得研究功能、页面、API、Vendor、partner、owner、商务 / 合规落地或实现细节。
-- 允许在战略层确认某类 Capability 存在可行供应路径或市场先例；一旦问题变成“找哪家、找谁、怎么合作、多少钱、怎么接”，标记 `Downstream Vendor/Implementation Validation` 并停止。
+- 本阶段不研究 Vendor / partner / supply path；既有外部证据仅可用于理解用户当前替代方案，不在本阶段形成新的供应可行性、合作方或实施结论。
 - P1 保持 **`NOT_YET_PASS`**；P2 scale 继续 blocked by P1；Roadmap 保持 `Current → P1 One Money Relationship → P2 Multi-rail Everyday Spend → P3 Everyday Money Account`；`Gate Serial / Discovery Parallel` 不变。
 
 接手本任务时，先执行以下检查，再做任何研究：
