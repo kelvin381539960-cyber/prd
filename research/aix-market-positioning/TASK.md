@@ -3,12 +3,18 @@
 - **状态**：Active
 - **开始日期**：2026-08-29
 - **研究对象**：AIX
-- **核心目标**：建立 AIX 所处的 Crypto / Stablecoin 现实购买力市场底图，识别真实用户 Jobs、生态位、竞争关系与 AIX 应占据的位置。
+- **核心目标**：建立 AIX 所处的 Crypto / Stablecoin 现实购买力市场底图，识别真实用户 Jobs、生态位、竞争关系与 AIX 应占据的位置，并据此完成 Strategy + Capability Level 的能力决策。
 - **重点竞品样本**：RedotPay；其他玩家按市场证据纳入，不预设名单。
+
+## 任务目标（硬约束）
+
+本任务必须回答：AIX 应该成为什么、需要哪些核心 Capability、为什么需要、各项 Capability 的优先级与顺序是什么、Roadmap / Gate 如何安排，以及什么证据足以支持进入下一阶段。
+
+本任务只做战略定位、Capability 判断、优先级/顺序、关键约束与证据边界；不把能力判断延伸为具体合作或实现指令。
 
 ## 🚨 Next Agent 必读：本任务的最高研究深度
 
-**本任务不是功能设计 / PRD 任务。最高研究深度固定为 `Strategy + Capability Level`。**
+**本任务不是功能设计 / PRD 任务。最高且唯一的研究深度固定为 `Strategy + Capability Level`。**
 
 本任务负责回答：
 - AIX 应进入什么市场、服务什么用户 Job、建立什么用户关系；
@@ -41,6 +47,28 @@
 ### 一句话边界
 
 > **本任务决定“AIX 应该成为什么、需要哪些能力、先做什么后做什么、为什么”；不决定“每个功能具体怎么设计和实现”。**
+
+### Out of Scope（明确禁止）
+
+以下内容一律不属于本 task：
+
+- 具体 Vendor / partner selection or onboarding；
+- 内部 owner / sponsor identification 或 handoff；
+- 商务报价、商业条款或合同谈判；
+- 具体牌照、监管责任或责任拆分谈判；
+- API、字段、状态、技术集成或接口方案；
+- 实现级 fund-flow、技术方案或代码；
+- 功能细节、页面、UX、交互、文案、原型或 PRD。
+
+### Vendor / Partner Stop Rule
+
+允许在战略层确认某类 Capability 存在可行的供应路径或市场先例，用于判断 Capability 的可行性、约束、优先级或证据强弱；不允许在本 task 内推进具体执行。一旦问题变成“找哪家、找谁、怎么合作、多少钱、怎么接”，必须标记为 `Downstream Vendor/Implementation Validation` 并立即停止，不得继续在本 task 选择 Vendor / partner、识别内部 owner / sponsor、推进 handoff、谈判商务/合规责任或设计集成。
+
+### Stage 10–12 证据上限
+
+Stage 10–12 只能作为 **QRPh Capability 的可行性与证据上限**：可用于判断 QRPh Capability 是否值得继续发现、当前有哪些 Unknown / hard constraints、以及其优先级和 Gate 影响。Stage 10–12 的既有文本、历史 next action 或 Vendor Validation 表述不构成当前任务的执行授权。
+
+Stage 10–12 不得成为继续做 Stage 13 owner / sponsor / vendor execution 的依据；本任务不启动或延续 Stage 13 的内部 owner 定位、sponsor 确认、partner onboarding、商务/合规落地或具体实现验证。超出 QRPh Capability 判断的问题统一标记为 `Downstream Vendor/Implementation Validation` 并停止。既有 Stage 10–12 报告、证据与 review 不删除、不改写。
 
 ### Evidence Stop Rule
 
@@ -115,11 +143,17 @@ Roadmap 阶段的默认单位是**业务能力、用户关系、产品形态、�
 
 三者是分层、递进的 staged path，不得写成三个并行产品或三个并行战略。
 
+当前不可变状态：P1 = `NOT_YET_PASS`；P2 scale blocked by P1；Roadmap = `Current → P1 One Money Relationship → P2 Multi-rail Everyday Spend → P3 Everyday Money Account`；执行方式 = `Gate Serial / Discovery Parallel`。后续研究不得改写这些状态，只能在 Capability / evidence / Gate 影响层补充依据。
+
 ### 6. Stop Rule
 
 只要出现页面/交互/字段/API/状态机/异常规则/具体流程等设计决策，即视为 **scope drift**，不需要等“连续两个以上”。必须立即停止，删除/搁置该下钻分支，并回到当前战略问题；不得继续累积为研究产物。
 
 如果产出已经可以直接交给研发作为具体功能需求，则说明研究深度已越界，应回退到 Capability 表述。
+
+### 越界自检
+
+每次输出前检查：若产出可以直接交给商务、合规或研发去执行具体合作或实现，则已越界；立即停止该分支，标记为 `Downstream Vendor/Implementation Validation`，并回退到 Capability、证据、优先级或 Gate 影响。
 
 ## 研究原则
 1. 先研究市场与用户，再研究品牌；不从竞品功能表倒推市场。
@@ -145,7 +179,8 @@ Roadmap 阶段的默认单位是**业务能力、用户关系、产品形态、�
 | Strategic Validation 10 | QR Ph named partner + operating model + economics discovery | ✅ Completed | [`10-qrph-partner-operating-model.md`](10-qrph-partner-operating-model.md) |
 | Strategic Validation 11 | Netbank public feasibility closure | ✅ Completed | [`11-netbank-public-feasibility-closure.md`](11-netbank-public-feasibility-closure.md) |
 | Strategic Validation 12 | Netbank internal relationship validation route | ✅ Completed | [`12-netbank-internal-relationship-validation-route.md`](12-netbank-internal-relationship-validation-route.md) |
-| Strategic Validation 13 | Netbank internal owner route identification | ✅ Completed | [`13-netbank-internal-owner-route.md`](13-netbank-internal-owner-route.md) |
+| Strategic Validation 13 | Netbank internal owner route identification | ⚠️ Historical scope drift / archived | [13-netbank-internal-owner-route.md](13-netbank-internal-owner-route.md) |
+| Strategic Validation 14 | Target User Group Analysis | ⏳ Pending | — |
 
 ## 当前阶段验收
 Step 1 已于 2026-08-29 经 **Advance Codex CLI → ARouter → grok-4.6 → xhigh** 两轮严格评审：
@@ -314,42 +349,75 @@ Roadmap 仍为 `Current → P1 One Money Relationship → P2 Multi-rail Everyday
 
 证据索引：[`evidence/12-sources.md`](evidence/12-sources.md)。评审：[`reviews/12-achatgpt56sol-review.md`](reviews/12-achatgpt56sol-review.md)。
 
-### Strategic Validation 13：Netbank Internal Owner Route Identification
+### Historical scope drift note — Strategic Validation 13
 
-本阶段已完成 **Strategy + Capability Level 的内部 owner route 物化**，并经 **AChatGPT GPT-5.6 Sol/high** 独立验收评审获得 **CLEAN PASS**（review job `job_01M1AS4ZYHJR1VHX8WTZXX0FAD`；P0=0/P1=0/P2=0；FINDINGS=NONE），当前状态为 **`✅ Completed`**。本阶段严格使用固定、脱敏的 Stage 13 事实，不新增研究、不重新解释结论，不执行 handoff、消息起草/发送或 contact action。
+Stage 13 曾经执行并形成历史产物，但按当前 authoritative scope 复核后被判定为超出本研究任务边界。它涉及 internal owner/sponsor route，属于 `Downstream Vendor/Implementation Validation`，不是 active task，也不是 continuation point。其历史文件可保留用于审计，但不得作为后续 owner/vendor/商务/合规落地工作的授权或 handoff；当前主线先进入 Strategic Validation 14，不进入 owner/vendor route 或 Remittance / QR / Send capability prioritization。
 
-关键验收状态：
-- **Internal owner route：** **`PARTIALLY_IDENTIFIED`**，不是 fully identified。证据支持 role/team chain：`PH Savings/Product → existing Netbank integration/operations → vendor/commercial/compliance sponsor`；这是 role/team path，不是 named-person ownership。
-- **Sponsor / authority：** exact vendor/commercial/compliance sponsor 及其是否有 authority to sponsor AIX onboarding 均为 **`UNKNOWN`**；当前 evidence/search coverage 未建立这些事实。缺失是 coverage limitation，不是 absence proof。
-- **Canonical states：** AIX partner status = **`DISCOVERY_CANDIDATE_NOT_APPROVED`**；group relationship = **`EXISTING_ACTIVE`**；vendor-access risk = **`REDUCED_NOT_ELIMINATED`**；owner sponsorship = **`UNKNOWN`**。
-- **Next route：** `INTERNAL_OWNER_HANDOFF_THEN_AIX_VENDOR_VALIDATION`；Stage 13 只细化 handoff 的起点，不代表 handoff 已执行或 AIX 已通过 validation。
-- **Unresolved branch：** 如果 internal route 无法识别 authorized sponsor，记录 **`INTERNAL_OWNER_UNRESOLVED`** 并停止；不得据此推断 approval。若后续 AIX-specific Vendor Validation 的核心条件失败，则 **downgrade Netbank and resume Tier-2 partner discovery**。
-- **Unchanged:** contract/commercial reuse 与 technical capability reuse 仍为 **`UNKNOWN`**；Stage 11/12 AIX-specific QRPh Unknowns 不变；P1 仍为 **`NOT_YET_PASS`**，P2 scale 仍被 P1 阻断，roadmap 与 `Gate Serial / Discovery Parallel` 不变。
+### Strategic Validation 14 — Target User Group Analysis（Pending）
 
-阶段边界：本阶段只完成 Strategy + Capability Level 的内部 owner route 定位，不进入 internal/external message drafting or sending、contact action、employee identification、contract negotiation、API、implementation-level fund-flow diagram、feature、UX、PRD、state machine、error handling、schema 或 code。
+**状态：`Pending`。** 这是下一独立阶段，且必须先于 Remittance / QR / Send capability prioritization。它要重新回答：“谁是 AIX 的核心目标用户？”既有阶段对 J1、OFW / remittance、crypto-native、stablecoin-native 或其他群体的结论，只能作为待复核的历史假设，不得直接当作本阶段的用户前提。
 
-证据索引：[`evidence/13-sources.md`](evidence/13-sources.md)。评审：[`reviews/13-achatgpt56sol-review.md`](reviews/13-achatgpt56sol-review.md)。
+#### 阶段战略问题与边界
+
+本阶段只在 **Strategy + Capability Level** 判断候选用户群、核心 User Jobs、AIX 应建立的用户关系及其对定位 / Roadmap / Capability 的影响，不做功能设计或实现设计。
+
+不得因 AIX 当前能力、当前地区覆盖、现有渠道或既有 Roadmap 反推核心用户。每个候选群体必须按证据逐项判断；证据不足时保留 `Unknown`，没有证据不得将任何群体升级为 **Core Target User**。
+
+#### 最低研究维度
+
+至少覆盖以下维度，并为每个候选群体标注证据强弱与 Unknown：
+
+- 候选用户群及其可区分的分层依据；
+- 核心 Jobs；
+- 收入 / 资金来源及币种形态（`fiat` / `crypto` / `stablecoin`）；
+- 当前金融行为与 crypto 行为；
+- stablecoin 认知与真实使用；
+- 为什么愿意持有或使用 stablecoin；
+- 痛点强度；
+- 使用频率与价值；
+- 当前替代方案；
+- AIX fit；
+- 市场规模与证据强度；
+- 可触达性；
+- 留存 / 资金关系潜力。
+
+#### 币种口径硬约束
+
+必须明确区分 **“收入 / 资金来源的币种”** 与 **“进入 AIX 后用户愿意持有或使用的资金形态”**。前者不得推导后者；两者分别记录 `fiat` / `crypto` / `stablecoin` / `Unknown`，并说明证据边界。
+
+#### 阶段输出与完成条件
+
+阶段输出必须包括：
+
+- `Primary / Secondary / Non-target` 用户分层；
+- 可被证据支持的核心用户定义；
+- 各分层、各关键维度的证据强弱与 `Unknown`；
+- 对定位、Roadmap 与 Capability 优先级的影响，以及仍需验证的 Gate / 假设。
+
+在本阶段完成并形成可审计结论前，暂停 Remittance / QR / Send 的进一步优先级结论；它们的 capability prioritization 是本阶段之后的下游工作。全程保持 **Strategy + Capability Level**，禁止下钻到功能、页面、API、Vendor、partner、owner 或实现细节。
 
 ## 下一位主控接手协议
 
-### 当前 handoff：Strategic Validation 13 — Netbank Internal Owner Route Identification
+### 当前 handoff：Strategic Validation 14 — Target User Group Analysis
 
-- 当前战略问题：在不推断 AIX approval 的前提下，内部证据能否把 Netbank owner handoff 的起点定位到可授权的 role/team route？当前答案是：内部 owner route = **`PARTIALLY_IDENTIFIED`**，不是 fully identified；支持的 chain 是 `PH Savings/Product → existing Netbank integration/operations → vendor/commercial/compliance sponsor`。
-- 当前 canonical states：AIX-specific partner status = **`DISCOVERY_CANDIDATE_NOT_APPROVED`**；group relationship = **`EXISTING_ACTIVE`**；vendor-access risk = **`REDUCED_NOT_ELIMINATED`**；owner sponsorship = **`UNKNOWN`**。Exact sponsor identity 及其 authority to sponsor AIX onboarding 仍为 Unknown；search coverage limitation 不能证明 absence。
-- 最小执行路线仍为 **`INTERNAL_OWNER_HANDOFF_THEN_AIX_VENDOR_VALIDATION`**：从 PH Savings/Product informed entry point 开始，沿 existing Netbank integration/operations route，定位 authorized vendor/commercial/compliance sponsor。Stage 13 只 refine handoff start，不代表 handoff 已执行、消息已起草/发送或 contact action 已发生。
-- 如果 internal route 无法识别 authorized sponsor，记录 **`INTERNAL_OWNER_UNRESOLVED`** 并停止；不得从 role/team chain 推断 approval、willingness 或 sponsorship。若后续 AIX-specific Vendor Validation 的 eligibility、acceptable pooled model、credible stablecoin→PHP composition、acceptable regulatory burden 或 viable all-in economics 任一核心条件失败，则 **downgrade Netbank and resume Tier-2 partner discovery**。
-- 既有 contract/commercial reuse 与 technical capability reuse 均保持 **`UNKNOWN`**；Stage 11/12 AIX-specific QRPh permissibility、完整 stablecoin→PHP→QRPh composition、AIX-specific approval/licensing、compliance split、all-in economics 与 use-case acceptance 等 Unknowns 均不变。不得把 group relationship 或 role/team path 扩写成 AIX eligibility、partner approval、pricing、license/compliance allocation 或 reusable code/API。
-- **Hardened Capability-level guardrail：** 必须停留在 Strategy + Capability Level；不得进入 internal/external message drafting or sending、contact execution、employee identification、contract negotiation wording、API endpoint、implementation-level fund-flow diagram、feature、UX、PRD、state machine、error handling、schema 或 code。若 authorized sponsor 仍无法确认，记录 `INTERNAL_OWNER_UNRESOLVED` 后停止。
-- P1 仍为 **`NOT_YET_PASS`**；P2 scale 仍被 P1 阻断；Roadmap 仍为 `Current → P1 One Money Relationship → P2 Multi-rail Everyday Spend → P3 Everyday Money Account`；Gate Serial / Discovery Parallel 不变。
+下一步只做 Target User Group Analysis：重新判断 AIX 的核心目标用户，不预设 OFW / Remittance、crypto-native 或 stablecoin-native 任一群体为核心；完成前不得继续形成 Remittance / QR / Send 的进一步 capability prioritization 结论。
+
+- 研究单位是候选用户群、User Jobs、资金关系、市场证据与 AIX fit，最终回传 Primary / Secondary / Non-target 分层及其对定位、Roadmap、Capability prioritization 的影响；不是 Vendor、partner、内部 owner 或 feature list。
+- 逐项核对候选用户群、Jobs、收入 / 资金来源币种、当前金融 / crypto 行为、stablecoin 认知与真实使用、持有 / 使用动机、痛点、频率 / 价值、替代方案、AIX fit、市场规模 / 证据强度、可触达性与留存 / 资金关系潜力。
+- 严格分开“收入 / 资金来源币种”与“进入 AIX 后愿意持有 / 使用的资金形态”；任一关键判断无证据时标记 `Unknown`，不得升级为 Core Target User。
+- 不因 AIX 当前能力、当前地区或既有 Roadmap 倒推用户；既有 J1 / OFW / Remittance / crypto-native / stablecoin-native 结论均作为待复核假设，而非预设答案。
+- 确认分析与预期输出仍处于 Strategy + Capability Level；不得研究功能、页面、API、Vendor、partner、owner、商务 / 合规落地或实现细节。
+- 允许在战略层确认某类 Capability 存在可行供应路径或市场先例；一旦问题变成“找哪家、找谁、怎么合作、多少钱、怎么接”，标记 `Downstream Vendor/Implementation Validation` 并停止。
+- P1 保持 **`NOT_YET_PASS`**；P2 scale 继续 blocked by P1；Roadmap 保持 `Current → P1 One Money Relationship → P2 Multi-rail Everyday Spend → P3 Everyday Money Account`；`Gate Serial / Discovery Parallel` 不变。
 
 接手本任务时，先执行以下检查，再做任何研究：
-1. 用一句话复述 Stage 13 的当前战略问题；
-2. 只判断 internal owner route 的 role/team 定位、authorized sponsor 是否已建立，以及上述 canonical states 是否保持；
-3. 明确本轮 **不会研究** message drafting/sending、contact action、employee identification、contract negotiation、API、implementation-level fund-flow、feature、UX、PRD、state machine、error handling、schema 或 code；
-4. 若现有证据已足以做本阶段的 Capability 决策，不再深挖 owner 细节或功能内部细节；
-5. Reviewer 必须把 `是否越过 Capability Level` 作为独立 Gate。发生越界时，即使事实正确，也判执行偏航并退回。
+1. 用一句话复述本轮要回答的“谁是 AIX 核心目标用户”战略问题；
+2. 列出不预设结论的候选用户群，并对每个群体逐项检查最低研究维度、证据强弱与 Unknown；
+3. 确认分析与预期输出仍处于 Strategy + Capability Level；
+4. 明确本轮不会研究功能、页面、API、Vendor、partner、owner、商务 / 合规落地或实现细节；
+5. 在 Stage 14 结论完成前，不形成 Remittance / QR / Send 的进一步优先级结论；发生 scope drift 时立即停止并回退。
 
-默认交付格式优先为：**战略结论 → Capability 需求/优先级 → 依据 → Unknown/风险 → Roadmap/Gate 影响**。不输出功能详细方案。
+默认交付格式优先为：**候选用户群 → Primary / Secondary / Non-target → 核心用户定义 → 证据强弱 / Unknown → 定位 / Roadmap / Capability 影响**。不输出功能详细方案。
 
 ## 后续维护规则
 每完成一个 Step：
